@@ -40,7 +40,7 @@ const umamiId = env.PUBLIC_UMAMI_WEBSITE_ID;
   <body>
     <a class="skip-link" href="#main">跳到主要内容</a>
     <TopBar />
-    <main id="main">
+    <main id="main" tabindex="-1">
       <slot />
     </main>
     <Footer />
@@ -166,6 +166,7 @@ const umamiId = env.PUBLIC_UMAMI_WEBSITE_ID;
         main.classList.remove('page-enter');
         void main.offsetWidth;
         main.classList.add('page-enter');
+        main.focus({ preventScroll: true });
       });
     </script>
   </body>
