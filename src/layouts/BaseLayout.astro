@@ -1,0 +1,91 @@
+---
+import '../styles/global.css';
+import SEO from '../components/SEO.astro';
+import TopBar from '../components/TopBar.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  type?: 'website' | 'article' | 'profile';
+  person?: boolean;
+  noindex?: boolean;
+}
+
+const props = Astro.props;
+const env = import.meta.env as Record<string, string | undefined>;
+const umamiSrc = env.PUBLIC_UMAMI_SRC;
+const umamiId = env.PUBLIC_UMAMI_WEBSITE_ID;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <SEO {...props} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#0A0A0A" />
+    <meta name="author" content="徐念祖" />
+    {umamiSrc && umamiId && (
+      <script is:inline defer src={umamiSrc} data-website-id={umamiId}></script>
+    )}
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">跳到主要内容</a>
+    <TopBar />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+
+    <script>
+      const menuBtn = document.querySelector<HTMLButtonElement>('[data-menu-btn]');
+      const mobileNav = document.getElementById('mobile-nav');
+
+      if (menuBtn && mobileNav) {
+        const setOpen = (open: boolean) => {
+          mobileNav.classList.toggle('open', open);
+          menuBtn.setAttribute('aria-expanded', String(open));
+          menuBtn.textContent = open ? '关闭' : '菜单';
+        };
+
+        menuBtn.addEventListener('click', () => {
+          setOpen(!mobileNav.classList.contains('open'));
+        });
+
+        mobileNav.addEventListener('click', (event) => {
+          if ((event.target as HTMLElement).closest('a')) setOpen(false);
+        });
+
+        document.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape') setOpen(false);
+        });
+
+        document.addEventListener('click', (event) => {
+          const target = event.target as Node;
+          if (!mobileNav.contains(target) && !menuBtn.contains(target)) setOpen(false);
+        });
+      }
+
+      document.querySelectorAll<HTMLButtonElement>('[data-copy-email]').forEach((button) => {
+        button.addEventListener('click', async () => {
+          const email = button.dataset.copyEmail ?? '';
+          const original = button.textContent ?? '复制';
+          try {
+            await navigator.clipboard.writeText(email);
+            button.textContent = '已复制';
+            window.setTimeout(() => {
+              button.textContent = original;
+            }, 1600);
+          } catch {
+            window.location.href = `mailto:${email}`;
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

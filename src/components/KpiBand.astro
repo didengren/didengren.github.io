@@ -1,0 +1,16 @@
+---
+import impact from '../data/impact.json';
+---
+
+<section class="kpis" aria-label="精选成果">
+  <div class="wrap kpis-in">
+    {impact.map((item) => (
+      <div class="kpi">
+        <div class="kpi-n">{item.value}<u>{item.unit}</u></div>
+        <div class="kpi-l">{item.label}</div>
+        <div class="kpi-d">{item.context}</div>
+        <div class="kpi-bar"></div>
+      </div>
+    ))}
+  </div>
+</section>

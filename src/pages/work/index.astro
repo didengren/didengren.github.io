@@ -1,0 +1,55 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CaseRow from '../../components/CaseRow.astro';
+import ContactBlock from '../../components/ContactBlock.astro';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const flagship = projects.filter((project) => project.data.featured);
+const supporting = projects.filter((project) => !project.data.featured);
+---
+
+<BaseLayout
+  title="作品｜徐念祖 Sam Xu"
+  description="五个真实项目：户用光伏统一入口平台、跨系统 AI 工作入口、代理商移动作业 App、分布式光伏 CRM、仓配物流系统。"
+  ogDescription="从 0→1、跨系统入口整合到 AI 产品：每个案例只讲问题、取舍与结果。"
+>
+  <div class="wrap">
+    <header class="page-head">
+      <p class="kicker">WORK / {projects.length} CASES</p>
+      <h1 class="page-title">案例</h1>
+      <p class="page-lead">
+        每个案例按「问题—取舍—结果」写，不列功能清单。三个旗舰案例在前，两个支撑案例在后；
+        页面只讲逻辑，不放内部截图、客户名与明细数据。
+      </p>
+    </header>
+
+    <section>
+      <div class="section-head">
+        <h2>旗舰案例</h2>
+        <span class="en">FLAGSHIP / {String(flagship.length).padStart(2, '0')}</span>
+      </div>
+
+      {flagship.map((project, index) => (
+        <CaseRow project={project} index={index + 1} />
+      ))}
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2>支撑案例</h2>
+        <span class="en">SUPPORTING / {String(supporting.length).padStart(2, '0')}</span>
+      </div>
+
+      {supporting.map((project, index) => (
+        <CaseRow project={project} index={flagship.length + index + 1} />
+      ))}
+
+      <p class="note section-more">
+        支撑案例只写机制与行为变化；没有可公开的量化口径，就不补数字。
+      </p>
+    </section>
+  </div>
+
+  <ContactBlock />
+</BaseLayout>

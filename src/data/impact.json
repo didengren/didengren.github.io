@@ -1,0 +1,30 @@
+[
+  {
+    "value": "92",
+    "unit": "系统",
+    "label": "前端基建覆盖",
+    "context": "组件平台 / monorepo / 微前端 / 可观测",
+    "source": "前端经理版"
+  },
+  {
+    "value": "45",
+    "unit": "入口",
+    "label": "代理商工作台",
+    "context": "4 类角色，按角色—任务—阶段重组",
+    "source": "PM 简历 v1.18"
+  },
+  {
+    "value": "3",
+    "unit": "个月",
+    "label": "户用光伏 0→1",
+    "context": "一批存量系统不重构，免登接入",
+    "source": "PM 简历 v1.17"
+  },
+  {
+    "value": "6",
+    "unit": "类业务",
+    "label": "跨系统 AI 入口",
+    "context": "问进度—找入口—去办理",
+    "source": "PM 简历 v1.17"
+  }
+]

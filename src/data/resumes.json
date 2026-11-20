@@ -1,0 +1,16 @@
+[
+  {
+    "label": "产品经理",
+    "description": "主投版本：技术产品方向内容，抬头「产品经理」。",
+    "recommendedFor": "技术产品 / 平台产品 / B 端产品",
+    "file": null,
+    "status": "导出中"
+  },
+  {
+    "label": "前端经理",
+    "description": "次选版本：前端团队管理、前端基建与工程化。",
+    "recommendedFor": "前端管理 / 前端架构",
+    "file": null,
+    "status": "导出中"
+  }
+]

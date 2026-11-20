@@ -1,0 +1,10 @@
+---
+import profile from '../data/profile.json';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer wrap">
+  <span>© {year} {profile.name} · {profile.title}</span>
+  <span>LAST UPDATED {profile.lastUpdated} · twonian.github.io</span>
+</footer>

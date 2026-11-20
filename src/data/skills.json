@@ -1,0 +1,45 @@
+[
+  {
+    "title": "产品方法",
+    "items": [
+      "需求分析",
+      "PRD / 原型",
+      "流程与状态设计",
+      "权限体系",
+      "项目管理",
+      "指标设计"
+    ]
+  },
+  {
+    "title": "技术判断",
+    "items": [
+      "JavaScript / TypeScript",
+      "Vue / React",
+      "Node / NestJS",
+      "Python / FastAPI",
+      "MySQL / Redis",
+      "Docker",
+      "微前端 / monorepo"
+    ]
+  },
+  {
+    "title": "工程与 AI",
+    "items": [
+      "MCP Server",
+      "Skills / Agents",
+      "AI Coding",
+      "RAG",
+      "前端基建",
+      "可观测"
+    ]
+  },
+  {
+    "title": "行业",
+    "items": [
+      "户用光伏",
+      "分布式光伏",
+      "仓配物流",
+      "经销商体系"
+    ]
+  }
+]

@@ -1,0 +1,85 @@
+---
+interface Props {
+  kind: 'converge' | 'flow' | 'layers' | 'funnel' | 'loop';
+}
+
+const { kind } = Astro.props;
+---
+
+<svg viewBox="0 0 220 92" aria-hidden="true">
+  {kind === 'converge' && (
+    <>
+      <g fill="none" stroke="#B9B8B0" stroke-width="0.7">
+        <path d="M4 8H66M4 22H66M4 36H66M4 50H66M4 64H66M4 78H66" />
+        <path d="M66 8C112 8 112 43 160 43M66 22C112 22 112 43 160 43M66 36C112 36 112 43 160 43M66 50C112 50 112 43 160 43M66 64C112 64 112 43 160 43M66 78C112 78 112 43 160 43" />
+      </g>
+      <circle cx="160" cy="43" r="3" fill="#D6381F" />
+      <text x="172" y="46" font-family="SF Mono,monospace" font-size="6" fill="#8E8D86">1 入口</text>
+    </>
+  )}
+
+  {kind === 'flow' && (
+    <>
+      <g fill="none" stroke="#B9B8B0" stroke-width="0.7">
+        <rect x="4" y="28" width="52" height="30" />
+        <rect x="84" y="28" width="52" height="30" />
+        <rect x="164" y="28" width="52" height="30" />
+        <path d="M56 43H84M136 43H164" stroke="#D6381F" stroke-width="1" />
+      </g>
+      <g font-family="PingFang SC,sans-serif" font-size="7" fill="#8E8D86" text-anchor="middle">
+        <text x="30" y="46">问进度</text>
+        <text x="110" y="46">找入口</text>
+        <text x="190" y="46">去办理</text>
+      </g>
+      <text x="4" y="80" font-family="SF Mono,monospace" font-size="6" fill="#8E8D86">AI 不替代办理</text>
+    </>
+  )}
+
+  {kind === 'layers' && (
+    <>
+      <g fill="none" stroke="#B9B8B0" stroke-width="0.7">
+        <rect x="4" y="6" width="212" height="20" />
+        <rect x="4" y="34" width="212" height="20" />
+        <rect x="4" y="62" width="212" height="20" stroke="#D6381F" />
+      </g>
+      <g font-family="PingFang SC,sans-serif" font-size="7" fill="#8E8D86">
+        <text x="12" y="19">业务层 · 角色—任务—阶段</text>
+        <text x="12" y="47">能力层 · 定位 / 导航 / 打卡</text>
+        <text x="12" y="75">规则层 · 用户—角色—资源</text>
+      </g>
+    </>
+  )}
+
+  {kind === 'funnel' && (
+    <>
+      <g fill="none" stroke="#B9B8B0" stroke-width="0.7">
+        <rect x="10" y="4" width="200" height="20" />
+        <rect x="35" y="33" width="150" height="20" />
+        <rect x="60" y="62" width="100" height="20" stroke="#D6381F" />
+      </g>
+      <g font-family="PingFang SC,sans-serif" font-size="7" fill="#8E8D86" text-anchor="middle">
+        <text x="110" y="17">行业准入</text>
+        <text x="110" y="46">评估与评分</text>
+        <text x="110" y="75">转项目</text>
+      </g>
+    </>
+  )}
+
+  {kind === 'loop' && (
+    <>
+      <g fill="none" stroke="#B9B8B0" stroke-width="0.7">
+        <rect x="4" y="6" width="96" height="26" />
+        <rect x="120" y="6" width="96" height="26" />
+        <rect x="120" y="52" width="96" height="26" />
+        <rect x="4" y="52" width="96" height="26" />
+        <path d="M100 19H120M168 32V52M120 65H100M52 52V32" stroke="#D6381F" stroke-width="0.9" />
+      </g>
+      <g font-family="PingFang SC,sans-serif" font-size="7" fill="#8E8D86" text-anchor="middle">
+        <text x="52" y="22">到仓</text>
+        <text x="168" y="22">调拨</text>
+        <text x="168" y="68">出库</text>
+        <text x="52" y="68">退商</text>
+      </g>
+    </>
+  )}
+</svg>

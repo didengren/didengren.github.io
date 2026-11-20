@@ -1,0 +1,37 @@
+---
+import profile from '../data/profile.json';
+import resumes from '../data/resumes.json';
+---
+
+<div class="resume-grid">
+  {resumes.map((resume) => (
+    <div class="card resume-card">
+      <div class="card-k">{resume.file ? 'PDF' : 'PDF / 导出中'}</div>
+      <h3>{resume.label}</h3>
+      <p>{resume.description}</p>
+      <p class="resume-for">适合：{resume.recommendedFor}</p>
+      {resume.file ? (
+        <a
+          class="btn resume-btn"
+          href={resume.file}
+          download
+          data-umami-event="resume_download"
+        >
+          下载 PDF
+        </a>
+      ) : (
+        <a
+          class="btn resume-btn"
+          href={`mailto:${profile.email}?subject=请发一份${resume.label}简历`}
+          data-umami-event="resume_request"
+        >
+          邮件索取
+        </a>
+      )}
+    </div>
+  ))}
+</div>
+
+<p class="note resume-note">
+  PDF 尚在导出：产品经理版以技术产品方向内容为底稿，抬头统一写「产品经理」；前端经理版为次选。
+</p>

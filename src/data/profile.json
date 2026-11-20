@@ -1,0 +1,27 @@
+{
+  "name": "徐念祖",
+  "enName": "SAM XU",
+  "title": "产品经理",
+  "direction": "技术产品 / 平台产品 / B 端产品",
+  "location": "常州和周边城市",
+  "email": "twonian@gmail.com",
+  "github": "https://github.com/didengren",
+  "githubLabel": "GitHub",
+  "blog": "https://segmentfault.com/u/didengren",
+  "blogLabel": "SegmentFault",
+  "availability": "开放产品经理机会",
+  "availabilityShort": "开放机会",
+  "lastUpdated": "2026.11",
+  "seo": {
+    "title": "徐念祖 Sam Xu｜产品经理",
+    "description": "徐念祖，产品经理。在复杂多系统环境里做收敛，并把 AI 放进可管理的边界。10 年技术管理，1.5 年产品；做过 0→1、跨系统整合与 AI 助手。",
+    "ogTitle": "徐念祖 Sam Xu｜产品经理",
+    "ogDescription": "把分散的系统收成一个入口。三个案例：户用光伏统一入口平台、跨系统 AI 工作入口、代理商移动作业 App。"
+  },
+  "education": {
+    "school": "南京信息工程大学",
+    "major": "电子信息工程",
+    "degree": "本科 · 工学学士",
+    "period": "2008 — 2012"
+  }
+}

@@ -1,0 +1,46 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'experience'>;
+  variant?: 'compact' | 'full';
+  projectTitles?: Record<string, string>;
+}
+
+const { entry, variant = 'compact', projectTitles = {} } = Astro.props;
+const { data } = entry;
+---
+
+<div class="row">
+  <div class="when">{data.period}</div>
+
+  <div>
+    <h3 class="row-title">{data.company}</h3>
+    <div class="role">{data.role}</div>
+  </div>
+
+  <div>
+    {variant === 'compact' ? (
+      <p class="row-copy">{data.summary}</p>
+    ) : (
+      <ul class="row-copy exp-list">
+        {data.bullets.map((bullet) => <li>{bullet}</li>)}
+      </ul>
+    )}
+
+    {data.tags.length > 0 && (
+      <div class="tags">
+        {data.tags.map((tag) => <span class="tag">{tag}</span>)}
+      </div>
+    )}
+
+    {variant === 'full' && data.projects.length > 0 && (
+      <p class="exp-links">
+        <span class="exp-links-k">相关案例</span>
+        {data.projects.map((slug) => (
+          <a href={`/work/${slug}/`}>{projectTitles[slug] ?? slug}</a>
+        ))}
+      </p>
+    )}
+  </div>
+</div>

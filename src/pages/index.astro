@@ -1,0 +1,92 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SystemMap from '../components/SystemMap.astro';
+import KpiBand from '../components/KpiBand.astro';
+import CaseRow from '../components/CaseRow.astro';
+import ExperienceRow from '../components/ExperienceRow.astro';
+import Methods from '../components/Methods.astro';
+import ContactBlock from '../components/ContactBlock.astro';
+import profile from '../data/profile.json';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const featured = projects.filter((project) => project.data.featured);
+
+const experience = (await getCollection('experience'))
+  .filter((entry) => !entry.data.early)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 3);
+---
+
+<BaseLayout person>
+  <div class="wrap">
+    <section class="hero">
+      <div>
+        <p class="kicker rise">产品经理 · {profile.direction}</p>
+        <h1 class="rise d1">把分散的系统<br /><em>收成一个入口</em></h1>
+        <p class="lead rise d2">
+          10 年技术管理，1.5 年产品。做过 <b>0→1</b>、跨系统整合与 AI 助手；擅长把入口、角色权限与状态规则，收成一个可用的产品。
+        </p>
+        <div class="actions rise d3">
+          <a class="btn" href="#work">查看案例 / 3</a>
+          <a
+            class="link"
+            href={`mailto:${profile.email}?subject=请发一份简历`}
+            data-umami-event="resume_request"
+          >
+            索取简历 PDF
+          </a>
+        </div>
+      </div>
+
+      <div class="rise d2">
+        <SystemMap />
+      </div>
+    </section>
+  </div>
+
+  <KpiBand />
+
+  <div class="wrap">
+    <section id="work">
+      <div class="section-head">
+        <h2>案例</h2>
+        <span class="en">CASE FILES / SELECTED</span>
+      </div>
+
+      {featured.map((project, index) => (
+        <CaseRow project={project} index={index + 1} />
+      ))}
+
+      <p class="note section-more">
+        <a href="/work/">全部案例 / {projects.length} →</a>
+      </p>
+    </section>
+
+    <section id="experience">
+      <div class="section-head">
+        <h2>经历</h2>
+        <span class="en">EXPERIENCE / 2011—2026</span>
+      </div>
+
+      <div class="rows">
+        {experience.map((entry) => <ExperienceRow entry={entry} />)}
+      </div>
+
+      <p class="note section-more">
+        <a href="/experience/">完整经历与教育背景 →</a>
+      </p>
+    </section>
+
+    <section id="method">
+      <div class="section-head">
+        <h2>方法</h2>
+        <span class="en">HOW I WORK</span>
+      </div>
+
+      <Methods />
+    </section>
+  </div>
+
+  <ContactBlock />
+</BaseLayout>

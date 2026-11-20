@@ -1,0 +1,42 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import MiniMap from './MiniMap.astro';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  index: number;
+}
+
+const { project, index } = Astro.props;
+const { data } = project;
+
+const captions: Record<string, string> = {
+  converge: '存量系统 → 统一入口',
+  flow: '问 → 找 → 办 / 写入必确认',
+  layers: '三层结构 / 45 入口',
+  funnel: '准入 → 评估 → 转项目',
+  loop: '到仓 → 调拨 → 退商 → 出库',
+};
+---
+
+<a class="case-row" href={`/work/${project.id}/`} data-umami-event={`case_${project.id}`}>
+  <div class="case-idx">
+    CASE {String(index).padStart(2, '0')}
+    <span>{data.year}</span>
+  </div>
+
+  <div>
+    <h3 class="case-title">{data.title}</h3>
+    <div class="tags">
+      {data.tags.map((tag) => <span class="tag">{tag}</span>)}
+    </div>
+    <p class="case-copy">
+      <b>问题：</b>{data.problem}<b> 结果：</b>{data.result}
+    </p>
+  </div>
+
+  <div class="case-mini">
+    <MiniMap kind={data.diagram} />
+    <span>{captions[data.diagram]}</span>
+  </div>
+</a>

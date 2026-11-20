@@ -1,0 +1,62 @@
+---
+const methods = [
+  {
+    key: '收',
+    title: '先收敛，再优化',
+    body: '多系统、多入口、多角色，先回答「能不能在一个地方找到、进得去」，再谈体验统一。',
+  },
+  {
+    key: '判',
+    title: '把边界算清楚',
+    body: '系统边界、研发成本、build-vs-buy；不重构不是偷懒，是算过时间、风险和业务连续性的取舍。',
+  },
+  {
+    key: '界',
+    title: 'AI 不越权',
+    body: '白名单、预览、确认、审计、降级。AI 可以帮忙找、帮忙问，但不能替用户做高风险决定。',
+  },
+];
+---
+
+<div class="methods">
+  <div class="method">
+    <svg viewBox="0 0 84 48" aria-hidden="true">
+      <g fill="none" stroke="#B9B8B0" stroke-width="0.8">
+        <path d="M2 6H28M2 16H28M2 26H28M2 36H28" />
+        <path d="M28 6C48 6 48 21 68 21M28 16C48 16 48 21 68 21M28 26C48 26 48 21 68 21M28 36C48 36 48 21 68 21" />
+      </g>
+      <circle cx="68" cy="21" r="3" fill="#D6381F" />
+    </svg>
+    <h3>{methods[0]!.key} · {methods[0]!.title}</h3>
+    <p>{methods[0]!.body}</p>
+  </div>
+
+  <div class="method">
+    <svg viewBox="0 0 84 48" aria-hidden="true">
+      <g fill="none" stroke="#B9B8B0" stroke-width="0.8">
+        <path d="M10 8H50V40H10Z" />
+        <path d="M50 8H74V40H50Z" stroke="#D6381F" />
+        <path d="M50 24H74" />
+      </g>
+    </svg>
+    <h3>{methods[1]!.key} · {methods[1]!.title}</h3>
+    <p>{methods[1]!.body}</p>
+  </div>
+
+  <div class="method">
+    <svg viewBox="0 0 84 48" aria-hidden="true">
+      <g fill="none" stroke="#B9B8B0" stroke-width="0.8">
+        <path d="M6 24H24M32 24H50M58 24H76" />
+        <circle cx="28" cy="24" r="4" />
+        <circle cx="54" cy="24" r="4" stroke="#D6381F" />
+      </g>
+      <g font-family="SF Mono,monospace" font-size="6" fill="#8E8D86">
+        <text x="18" y="42">PREVIEW</text>
+        <text x="46" y="42">CONFIRM</text>
+        <text x="70" y="42">AUDIT</text>
+      </g>
+    </svg>
+    <h3>{methods[2]!.key} · {methods[2]!.title}</h3>
+    <p>{methods[2]!.body}</p>
+  </div>
+</div>

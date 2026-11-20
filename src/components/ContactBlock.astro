@@ -1,0 +1,40 @@
+---
+import profile from '../data/profile.json';
+
+interface Props {
+  heading?: string;
+  headingEm?: string;
+  kicker?: string;
+  meta?: boolean;
+}
+
+const {
+  heading = '我在看产品经理机会。',
+  headingEm = '聊聊？',
+  kicker = 'OPEN TO PRODUCT ROLES',
+  meta = true,
+} = Astro.props;
+---
+
+<section class="contact" id="contact">
+  <div class="wrap contact-inner">
+    <div>
+      <p class="kicker">{kicker}</p>
+      <h2>{heading}<br /><em>{headingEm}</em></h2>
+      <a class="mail" href={`mailto:${profile.email}`} data-umami-event="contact_click">{profile.email}</a>
+      <button class="copy-btn" type="button" data-copy-email={profile.email}>复制</button>
+    </div>
+
+    {meta && (
+      <div class="contact-meta">
+        <p><b>方向</b>　{profile.direction}</p>
+        <p><b>地点</b>　{profile.location}</p>
+        <p>
+          <b>链接</b>　
+          <a href={profile.github} target="_blank" rel="noopener" data-umami-event="github_click">{profile.githubLabel}</a>　
+          <a href={profile.blog} target="_blank" rel="noopener" data-umami-event="blog_click">{profile.blogLabel}</a>
+        </p>
+      </div>
+    )}
+  </div>
+</section>

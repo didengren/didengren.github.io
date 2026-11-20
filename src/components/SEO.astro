@@ -1,0 +1,61 @@
+---
+import profile from '../data/profile.json';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  type?: 'website' | 'article' | 'profile';
+  person?: boolean;
+  noindex?: boolean;
+}
+
+const {
+  title = profile.seo.title,
+  description = profile.seo.description,
+  ogTitle = profile.seo.ogTitle,
+  ogDescription = profile.seo.ogDescription,
+  type = 'website',
+  person = false,
+  noindex = false,
+} = Astro.props;
+
+const site = Astro.site ?? new URL('https://twonian.github.io');
+const canonical = new URL(Astro.url.pathname, site).href;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: profile.name,
+  alternateName: profile.enName,
+  jobTitle: profile.title,
+  description: profile.seo.description,
+  url: site.href,
+  email: `mailto:${profile.email}`,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: '常州',
+    addressCountry: 'CN',
+  },
+  sameAs: [profile.github, profile.blog],
+  knowsAbout: ['产品管理', 'B 端产品', '平台产品', '多系统集成', 'AI 产品', '前端工程'],
+};
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+
+<meta property="og:type" content={type} />
+<meta property="og:title" content={ogTitle} />
+<meta property="og:description" content={ogDescription} />
+<meta property="og:url" content={canonical} />
+<meta property="og:site_name" content="徐念祖 Sam Xu" />
+<meta property="og:locale" content="zh_CN" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content={ogTitle} />
+<meta name="twitter:description" content={ogDescription} />
+
+{person && <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />}

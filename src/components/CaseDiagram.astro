@@ -1,0 +1,379 @@
+---
+interface Props {
+  kind: 'converge' | 'flow' | 'layers' | 'funnel' | 'loop';
+}
+
+const { kind } = Astro.props;
+
+const meta = {
+  converge: {
+    label: 'SYSTEM MAP / 存量系统 → 统一入口 → 三端',
+    head: '2026',
+    alt: '左侧一批存量系统，经统一账号与统一入口，分流到小程序、App 与 PC 门户三端',
+    caption:
+      '一批存量系统不重构；一次登录，进入有权限的系统。三端按场景分工，同一功能只在一端建设。',
+  },
+  flow: {
+    label: 'FLOW / 问进度 → 找入口 → 去办理',
+    head: '2025',
+    alt: '问进度、找入口、去办理三段式流程，下方是白名单、预览、确认、审计、降级五层安全边界',
+    caption:
+      'AI 只做「问」和「带去办理」；写入与高风险操作必须经过白名单、预览、确认、审计与降级。',
+  },
+  layers: {
+    label: 'LAYERS / 业务层 · 能力层 · 规则层',
+    head: '45 入口 / 4 角色',
+    alt: '业务层、能力层、规则层三层结构，右侧标注 45 个应用入口与 4 类角色',
+    caption:
+      '业务层决定「看到什么」，能力层决定「怎么复用」，规则层决定「能不能点、点完去哪」。',
+  },
+  funnel: {
+    label: 'FUNNEL / 准入 → 评估 → 评分 → 转项目',
+    head: '2025—2026',
+    alt: '商机与线索两条流程：商机经过行业准入、评估、评分后转项目；线索经过分派、兜底池、跟进提醒后审核转客户',
+    caption:
+      '商机把评估前置到签约前；线索用规则分派和兜底池接住；客户审核后才进入主数据。',
+  },
+  loop: {
+    label: 'LOOP / 到仓 · 调拨 · 退商 · 出库',
+    head: '四项改造',
+    alt: '到仓、调拨、出库、退商四个环节构成的仓配作业链路，中心标注不整体重构',
+    caption:
+      '不整体重构：四项改造分别解决错账、在途差异、退商物料回收与扫码回退。',
+  },
+}[kind];
+---
+
+<figure class="diagram">
+  <div class="diagram-head">
+    <span>{meta.label}</span>
+    <span>{meta.head}</span>
+  </div>
+
+  <div class="diagram-scroll" tabindex="0">
+    <svg viewBox="0 0 900 300" role="img" aria-label={meta.alt}>
+    {kind === 'converge' && (
+      <>
+        <g fill="none" stroke="#B9B8B0" stroke-width="0.8">
+          <rect x="24" y="36" width="106" height="42" />
+          <rect x="152" y="36" width="106" height="42" />
+          <rect x="24" y="96" width="106" height="42" />
+          <rect x="152" y="96" width="106" height="42" />
+          <rect x="24" y="156" width="106" height="42" />
+          <rect x="152" y="156" width="106" height="42" />
+          <rect x="24" y="216" width="106" height="42" />
+          <rect x="152" y="216" width="106" height="42" />
+        </g>
+
+        <g fill="none" stroke="#C9C8C1" stroke-width="0.7">
+          <path d="M258 57C320 57 340 90 388 90" />
+          <path d="M258 117C320 117 340 130 388 130" />
+          <path d="M258 177C320 177 340 170 388 170" />
+          <path d="M258 237C320 237 340 210 388 210" />
+        </g>
+
+        <rect x="390" y="40" width="140" height="220" fill="#0A0A0A" />
+        <text x="460" y="140" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="14" fill="#FFFFFF">统一入口</text>
+        <text x="460" y="164" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="12" fill="#A6A6A6">+ 免登</text>
+
+        <g fill="none" stroke="#B9B8B0" stroke-width="0.8">
+          <path d="M530 150C590 150 600 62 650 62" />
+          <path d="M530 150C590 150 600 150 650 150" />
+          <path d="M530 150C590 150 600 238 650 238" />
+        </g>
+
+        <g fill="none" stroke="#0A0A0A" stroke-width="0.8">
+          <rect x="650" y="34" width="230" height="56" />
+          <rect x="650" y="122" width="230" height="56" />
+          <rect x="650" y="210" width="230" height="56" />
+        </g>
+
+        <g font-family="PingFang SC, sans-serif" fill="#0A0A0A" font-size="13" font-weight="600">
+          <text x="666" y="57">获客 · 小程序</text>
+          <text x="666" y="145">现场作业 · App</text>
+          <text x="666" y="233">管理与配置 · PC 门户</text>
+        </g>
+        <g font-family="PingFang SC, sans-serif" fill="#666666" font-size="10">
+          <text x="666" y="75">轻量、易传播，承接线索与注册</text>
+          <text x="666" y="163">勘探、安装、巡检等移动能力</text>
+          <text x="666" y="251">统一入口与管理看板</text>
+        </g>
+
+        <g font-family="SF Mono, monospace" font-size="9" fill="#666666" letter-spacing="0.08em">
+          <text x="24" y="24">一批存量系统</text>
+          <text x="390" y="24">统一账号</text>
+          <text x="650" y="22">三端分工</text>
+        </g>
+      </>
+    )}
+
+    {kind === 'flow' && (
+      <>
+        <defs>
+          <marker id="flow-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M0 0L10 5L0 10z" fill="#D6381F" />
+          </marker>
+        </defs>
+
+        <g fill="none" stroke="#0A0A0A" stroke-width="0.9">
+          <rect x="30" y="50" width="220" height="84" />
+          <rect x="340" y="50" width="220" height="84" />
+          <rect x="650" y="50" width="220" height="84" />
+        </g>
+
+        <g stroke="#D6381F" stroke-width="1.1" marker-end="url(#flow-arrow)">
+          <path d="M250 92H332" />
+          <path d="M560 92H642" />
+        </g>
+
+        <g font-family="PingFang SC, sans-serif" fill="#0A0A0A" font-size="15" font-weight="600">
+          <text x="50" y="82">问进度</text>
+          <text x="360" y="82">找入口</text>
+          <text x="670" y="82">去办理</text>
+        </g>
+        <g font-family="PingFang SC, sans-serif" fill="#666666" font-size="10">
+          <text x="50" y="102">自然语言问经营节点</text>
+          <text x="50" y="118">与指标</text>
+          <text x="360" y="102">按意图直达待放款、</text>
+          <text x="360" y="118">安装派工、验收等页面</text>
+          <text x="670" y="102">回到原业务系统完成</text>
+          <text x="670" y="118">AI 不替代办理</text>
+        </g>
+
+        <g font-family="SF Mono, monospace" font-size="9" fill="#666666" letter-spacing="0.08em">
+          <text x="30" y="192">写入与高风险操作</text>
+          <text x="870" y="192" text-anchor="end">AI 只做问与带路</text>
+        </g>
+
+        <g fill="none" stroke="#0A0A0A" stroke-width="0.8">
+          <path d="M30 202H870M30 258H870" />
+          <path d="M198 202V258M366 202V258M534 202V258M702 202V258" stroke="#DADADA" />
+        </g>
+        <g font-family="PingFang SC, sans-serif" font-size="11" fill="#0A0A0A" text-anchor="middle">
+          <text x="114" y="235">白名单</text>
+          <text x="282" y="235">预览</text>
+          <text x="450" y="235">确认</text>
+          <text x="618" y="235">审计</text>
+          <text x="786" y="235">降级</text>
+        </g>
+      </>
+    )}
+
+    {kind === 'layers' && (
+      <>
+        <g fill="none" stroke="#0A0A0A" stroke-width="0.9">
+          <rect x="30" y="36" width="560" height="60" />
+          <rect x="30" y="116" width="560" height="60" />
+          <rect x="30" y="196" width="560" height="60" />
+        </g>
+
+        <g font-family="PingFang SC, sans-serif" fill="#0A0A0A" font-size="16" font-weight="600">
+          <text x="50" y="62">业务层</text>
+          <text x="50" y="142">能力层</text>
+          <text x="50" y="222">规则层</text>
+        </g>
+        <g font-family="PingFang SC, sans-serif" fill="#666666" font-size="11">
+          <text x="50" y="82">按「角色—任务—阶段」重组信息架构</text>
+          <text x="50" y="162">定位、导航、打卡抽象为可复用能力</text>
+          <text x="50" y="242">用户—角色—资源 + 跨系统状态流转</text>
+        </g>
+
+        <g stroke="#DADADA" stroke-width="0.8">
+          <path d="M590 66H630" />
+          <path d="M590 146H630" />
+          <path d="M590 226H630" stroke="#D6381F" />
+        </g>
+
+        <g font-family="PingFang SC, sans-serif" fill="#0A0A0A" font-size="18" font-weight="600">
+          <text x="630" y="56">45</text>
+          <text x="630" y="136">3</text>
+          <text x="630" y="216">4</text>
+        </g>
+        <g font-family="PingFang SC, sans-serif" fill="#666666" font-size="10">
+          <text x="630" y="72">个应用入口</text>
+          <text x="630" y="152">类通用能力复用</text>
+          <text x="630" y="232">类角色，覆盖 4 类资源</text>
+        </g>
+      </>
+    )}
+
+    {kind === 'funnel' && (
+      <>
+        <defs>
+          <marker id="funnel-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M0 0L10 5L0 10z" fill="#D6381F" />
+          </marker>
+        </defs>
+
+        <g font-family="SF Mono, monospace" font-size="9" fill="#D6381F" letter-spacing="0.08em">
+          <text x="24" y="52">商机</text>
+          <text x="24" y="182">线索 / 客户</text>
+        </g>
+
+        <g fill="none" stroke="#0A0A0A" stroke-width="0.9">
+          <rect x="120" y="30" width="150" height="56" />
+          <rect x="320" y="30" width="150" height="56" />
+          <rect x="520" y="30" width="150" height="56" />
+          <rect x="720" y="30" width="150" height="56" />
+          <rect x="120" y="160" width="150" height="56" />
+          <rect x="320" y="160" width="150" height="56" />
+          <rect x="520" y="160" width="150" height="56" />
+          <rect x="720" y="160" width="150" height="56" />
+        </g>
+
+        <g stroke="#D6381F" stroke-width="1.1" marker-end="url(#funnel-arrow)">
+          <path d="M270 58H312" />
+          <path d="M470 58H512" />
+          <path d="M670 58H712" />
+          <path d="M270 188H312" />
+          <path d="M470 188H512" />
+          <path d="M670 188H712" />
+        </g>
+
+        <g font-family="PingFang SC, sans-serif" fill="#0A0A0A" font-size="12" font-weight="600">
+          <text x="135" y="54">行业准入</text>
+          <text x="335" y="54">评估</text>
+          <text x="535" y="54">评分分档</text>
+          <text x="735" y="54">转项目</text>
+          <text x="135" y="184">规则分派</text>
+          <text x="335" y="184">兜底池</text>
+          <text x="535" y="184">跟进提醒</text>
+          <text x="735" y="184">审核转客户</text>
+        </g>
+        <g font-family="PingFang SC, sans-serif" fill="#666666" font-size="9.5">
+          <text x="135" y="72">屋顶条件前置拦截</text>
+          <text x="335" y="72">涉诉 / 报价 / 收益</text>
+          <text x="535" y="72">低分复核或拦截</text>
+          <text x="735" y="72">避免重复录入</text>
+          <text x="135" y="202">业务类型 + 所在地</text>
+          <text x="335" y="202">接住无人认领</text>
+          <text x="535" y="202">分级提醒与回收</text>
+          <text x="735" y="202">无效客户不进主数据</text>
+        </g>
+
+        <text x="120" y="276" font-family="SF Mono, monospace" font-size="9" fill="#666666" letter-spacing="0.06em">
+          先把存量底账理清，再把规则前置到签约前
+        </text>
+      </>
+    )}
+
+    {kind === 'loop' && (
+      <>
+        <defs>
+          <marker id="loop-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M0 0L10 5L0 10z" fill="#D6381F" />
+          </marker>
+        </defs>
+
+        <g fill="none" stroke="#0A0A0A" stroke-width="0.9">
+          <rect x="70" y="34" width="300" height="86" />
+          <rect x="530" y="34" width="300" height="86" />
+          <rect x="530" y="180" width="300" height="86" />
+          <rect x="70" y="180" width="300" height="86" />
+        </g>
+
+        <g stroke="#D6381F" stroke-width="1.1" marker-end="url(#loop-arrow)">
+          <path d="M370 77H522" />
+          <path d="M680 120V172" />
+          <path d="M530 223H378" />
+          <path d="M220 180V128" />
+        </g>
+
+        <g font-family="PingFang SC, sans-serif" fill="#0A0A0A" font-size="16" font-weight="600">
+          <text x="90" y="66">到仓</text>
+          <text x="550" y="66">调拨</text>
+          <text x="550" y="212">出库</text>
+          <text x="90" y="212">退商</text>
+        </g>
+        <g font-family="PingFang SC, sans-serif" fill="#666666" font-size="10">
+          <text x="90" y="86">四类场景 + 实体 / 虚拟仓</text>
+          <text x="90" y="102">在途数量自动扣减</text>
+          <text x="550" y="86">按仓库、车型、运价推荐</text>
+          <text x="550" y="102">结果可核对、可追溯</text>
+          <text x="550" y="232">先选托盘 / 单件</text>
+          <text x="550" y="248">已扫清单可删除重扫</text>
+          <text x="90" y="232">审批后加仓库核验</text>
+          <text x="90" y="248">物料退回自动重新入账</text>
+        </g>
+
+        <g text-anchor="middle">
+          <text x="450" y="140" font-family="SF Mono, monospace" font-size="10" fill="#D6381F" letter-spacing="0.1em">四项改造</text>
+          <text x="450" y="160" font-family="PingFang SC, sans-serif" font-size="10" fill="#666666">不整体重构</text>
+        </g>
+      </>
+    )}
+  </svg>
+  </div>
+
+  <figcaption>{meta.caption}</figcaption>
+</figure>
+
+<style>
+  .diagram {
+    border: 1px solid var(--color-ink);
+    background: var(--color-panel);
+    padding: 14px 16px 12px;
+    margin: 26px 0 8px;
+  }
+
+  .diagram-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    color: var(--color-muted);
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--color-ink);
+  }
+
+  .diagram svg {
+    width: 100%;
+    height: auto;
+  }
+
+  .diagram-scroll {
+    margin-top: 12px;
+    max-width: 100%;
+  }
+
+  figcaption {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 0.04em;
+    line-height: 1.7;
+    color: var(--color-muted);
+    margin-top: 8px;
+  }
+
+  @media (max-width: 760px) {
+    .diagram {
+      padding: 10px 10px 8px;
+    }
+
+    .diagram-head {
+      font-size: 8px;
+      letter-spacing: 0.06em;
+    }
+
+    .diagram-scroll {
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+    }
+
+    .diagram-scroll svg {
+      min-width: 640px;
+    }
+
+    .diagram::after {
+      content: "横向滑动查看完整系统图 →";
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.06em;
+      color: var(--color-muted);
+      margin-top: 8px;
+    }
+  }
+</style>

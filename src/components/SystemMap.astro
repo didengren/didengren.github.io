@@ -1,0 +1,89 @@
+---
+const cols = 14;
+const rows = 7;
+const x0 = 18;
+const y0 = 78;
+const gap = 18;
+const total = 92;
+
+const dots: { x: number; y: number; r: number; i: number }[] = [];
+for (let r = 0; r < rows; r++) {
+  for (let c = 0; c < cols; c++) {
+    const i = r * cols + c;
+    if (i >= total) break;
+    dots.push({ x: x0 + c * gap, y: y0 + r * gap, r, i });
+  }
+}
+
+const bars = [
+  { y: 50, center: 72, label: '现场作业' },
+  { y: 124, center: 146, label: '经营数据' },
+  { y: 198, center: 220, label: '办理入口' },
+];
+
+const linkIdx = [1, 8, 16, 23, 30, 37, 44, 51, 59, 66, 73, 81, 89];
+const links = linkIdx.map((idx, n) => {
+  const dot = dots[idx]!;
+  const target = bars[n % bars.length]!;
+  return {
+    d: `M${dot.x} ${dot.y}C${dot.x + 70} ${dot.y} 290 ${target.center} 360 ${target.center}`,
+    delay: 300 + n * 45,
+  };
+});
+---
+
+<figure class="scope" aria-label="92 个系统收敛为 1 个工作入口的系统图">
+  <div class="scope-head">
+    <span>SYSTEM MAP / 92 → 3 → 1</span>
+    <span>2021—2026</span>
+  </div>
+
+  <svg viewBox="0 0 620 270" role="img" aria-label="左侧 92 个系统节点，汇聚为 3 类入口，再收敛为 1 个统一入口">
+    <g fill="#8E8D86">
+      {dots.map((dot) => (
+        <circle
+          cx={dot.x}
+          cy={dot.y}
+          r="2.1"
+          opacity={0.35 + (dot.r / rows) * 0.5}
+          class="dot"
+          style={`animation-delay:${dot.i * 8}ms`}
+        />
+      ))}
+    </g>
+
+    <g fill="none" stroke="#C9C8C1" stroke-width="0.8">
+      {links.map((link) => (
+        <path d={link.d} class="trace" style={`animation-delay:${link.delay}ms`} />
+      ))}
+    </g>
+
+    <g>
+      {bars.map((bar) => <rect x="360" y={bar.y} width="54" height="44" fill="#0A0A0A" />)}
+    </g>
+
+    <g fill="#FFFFFF" font-family="PingFang SC, sans-serif" font-size="8.5" text-anchor="middle" class="map-label">
+      {bars.map((bar) => <text x="387" y={bar.center + 3}>{bar.label}</text>)}
+    </g>
+
+    <g fill="none" stroke="#B9B8B0" stroke-width="0.9">
+      <path d="M414 72H470M414 146H470M414 220H470" />
+      <path d="M470 72V220" />
+      <path d="M470 146H498" />
+    </g>
+
+    <circle cx="506" cy="146" r="8" fill="#D6381F" />
+    <circle cx="506" cy="146" r="17" fill="none" stroke="#D6381F" stroke-width="1.2" opacity="0.35" />
+
+    <g font-family="SF Mono, monospace" font-size="9" fill="#6B6B64" class="map-label">
+      <text x="18" y="214">92 SYSTEMS</text>
+      <text x="360" y="40">3 ENTRIES</text>
+      <text x="520" y="150">1 入口</text>
+    </g>
+  </svg>
+
+  <div class="scope-foot">
+    <span>92 个系统 / 45 个应用入口</span>
+    <b>1 个工作入口</b>
+  </div>
+</figure>

@@ -1,0 +1,20 @@
+[
+  {
+    "name": "micro-app-mcp",
+    "description": "为 micro-app 微前端框架构建的知识库 MCP Server：把 API、类型与示例变成 AI 可调用的知识。",
+    "repo": "https://github.com/didengren/micro-app-mcp",
+    "tags": ["MCP", "TypeScript"]
+  },
+  {
+    "name": "harness-task-flow",
+    "description": "用于任务分解与工作流编排的 AI 技能包，通过 npm 分发。",
+    "repo": "https://github.com/didengren/harness-task-flow",
+    "tags": ["AI 工作流", "Skills"]
+  },
+  {
+    "name": "bicorne-design",
+    "description": "基于 JSON Schema 驱动的统一设计系统 AI 技能包。",
+    "repo": "https://github.com/didengren/bicorne-design",
+    "tags": ["设计系统", "JSON Schema"]
+  }
+]

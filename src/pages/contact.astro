@@ -1,0 +1,71 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ResumeCards from '../components/ResumeCards.astro';
+import profile from '../data/profile.json';
+---
+
+<BaseLayout
+  title="联系｜徐念祖 Sam Xu"
+  description="联系徐念祖：邮箱 twonian@gmail.com；GitHub 与 SegmentFault；地点常州和周边城市。开放产品经理机会。"
+  ogDescription="我在看产品经理机会：技术产品 / 平台产品 / B 端产品。常州和周边城市。"
+>
+  <div class="wrap">
+    <header class="page-head">
+      <p class="kicker">CONTACT / OPEN TO PRODUCT ROLES</p>
+      <h1 class="page-title">聊聊？</h1>
+      <p class="page-lead">
+        我在看产品经理机会：技术产品 / 平台产品 / B 端产品。地点在常州和周边城市，行业不限。
+      </p>
+    </header>
+
+    <section class="contact-detail">
+      <div>
+        <p class="block-k">EMAIL</p>
+        <a class="big-mail" href={`mailto:${profile.email}`} data-umami-event="contact_click">
+          {profile.email}
+        </a>
+        <button class="copy-btn dark" type="button" data-copy-email={profile.email}>复制</button>
+        <p class="note contact-note">手机号不公开；需要时可在邮件里交换。</p>
+      </div>
+
+      <div class="contact-list">
+        <p><b>方向</b>　{profile.direction}</p>
+        <p><b>地点</b>　{profile.location}</p>
+        <p>
+          <b>GitHub</b>　
+          <a href={profile.github} target="_blank" rel="noopener" data-umami-event="github_click">
+            {profile.githubLabel} ↗
+          </a>
+        </p>
+        <p>
+          <b>写作</b>　
+          <a href={profile.blog} target="_blank" rel="noopener" data-umami-event="blog_click">
+            {profile.blogLabel} ↗
+          </a>
+        </p>
+        <p><b>状态</b>　{profile.availability}</p>
+      </div>
+    </section>
+
+    <section id="resume" class="section-pad">
+      <div class="section-head">
+        <h2>简历</h2>
+        <span class="en">RESUME / 2 VERSIONS</span>
+      </div>
+
+      <ResumeCards />
+    </section>
+
+    <section class="section-pad">
+      <div class="section-head">
+        <h2>隐私</h2>
+        <span class="en">PRIVACY</span>
+      </div>
+
+      <p class="note">
+        本站不放 cookies。若启用 Umami 分析，只记录匿名的页面访问与 CTA 事件，不采集个人身份信息；
+        不放手机号、客户名、内部截图与明细数据。
+      </p>
+    </section>
+  </div>
+</BaseLayout>

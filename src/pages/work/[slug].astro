@@ -1,0 +1,126 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CaseDiagram from '../../components/CaseDiagram.astro';
+import ContactBlock from '../../components/ContactBlock.astro';
+import profile from '../../data/profile.json';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const { data } = project;
+const { Content, headings } = await render(project);
+
+const all = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const index = all.findIndex((item) => item.id === project.id);
+const prev = all[(index - 1 + all.length) % all.length]!;
+const next = all[(index + 1) % all.length]!;
+
+const toc = headings.filter((heading) => heading.depth === 2);
+---
+
+<BaseLayout
+  title={`${data.title}｜徐念祖 Sam Xu`}
+  description={data.summary}
+  ogTitle={`${data.title}｜案例`}
+  ogDescription={data.summary}
+  type="article"
+>
+  <div class="wrap">
+    <nav class="crumb" aria-label="面包屑">
+      <a href="/">首页</a>
+      <span aria-hidden="true">/</span>
+      <a href="/work/">作品</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">{data.title}</span>
+    </nav>
+
+    <header class="case-head">
+      <p class="kicker">CASE {String(index + 1).padStart(2, '0')} / {data.year}</p>
+      <h1>{data.title}</h1>
+
+      <div class="case-meta">
+        <span>角色 <b>{data.role}</b></span>
+        <span>时间 <b>{data.period}</b></span>
+      </div>
+
+      <div class="tags">
+        {data.tags.map((tag) => <span class="tag">{tag}</span>)}
+      </div>
+
+      <p class="case-summary">{data.summary}</p>
+    </header>
+
+    <div class="case-layout">
+      <article class="prose-case">
+        <CaseDiagram kind={data.diagram} />
+        <Content />
+
+        <div class="case-foot">
+          <a class="btn" href="/contact/#resume" data-umami-event="resume_request">索取简历 PDF</a>
+          <a class="link" href={`mailto:${profile.email}?subject=关于${data.title}`} data-umami-event="contact_click">
+            就这个案例聊聊
+          </a>
+        </div>
+      </article>
+
+      <aside class="toc" data-toc aria-label="本页目录">
+        <p class="toc-title">CONTENTS</p>
+        {toc.map((heading) => (
+          <a href={`#${heading.slug}`}>{heading.text}</a>
+        ))}
+      </aside>
+    </div>
+
+    <nav class="pager" aria-label="案例翻页">
+      <a href={`/work/${prev.id}/`}>
+        <span class="pager-k">← PREVIOUS</span>
+        <span class="pager-t">{prev.data.title}</span>
+      </a>
+      <a href={`/work/${next.id}/`}>
+        <span class="pager-k">NEXT →</span>
+        <span class="pager-t">{next.data.title}</span>
+      </a>
+    </nav>
+  </div>
+
+  <ContactBlock />
+</BaseLayout>
+
+<script>
+  const tocLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-toc] a'));
+  const sections = tocLinks
+    .map((link) => {
+      const id = link.getAttribute('href')?.replace('#', '');
+      return id ? document.getElementById(id) : null;
+    })
+    .filter((section): section is HTMLElement => section !== null);
+
+  if (sections.length > 0 && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          const id = entry.target.id;
+          tocLinks.forEach((link) => {
+            link.classList.toggle('is-active', link.getAttribute('href') === `#${id}`);
+          });
+        }
+      },
+      { rootMargin: '0px 0px -68% 0px', threshold: 0 },
+    );
+
+    sections.forEach((section) => observer.observe(section));
+  }
+</script>
