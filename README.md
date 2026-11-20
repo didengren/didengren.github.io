@@ -87,7 +87,7 @@ public/                    # favicon / robots.txt（简历 PDF 放 public/resume
 ## 上线前待办
 
 - [ ] T-13 / T-14：导出 `徐念祖-产品经理.pdf` 与 `徐念祖-前端经理.pdf`，放入 `public/resume/`，切换下载 CTA。
-- [ ] 仓库改名为 `didengren.github.io` 后，在 Settings → Pages 重新确认 Source 为 GitHub Actions。
+- [x] 仓库已改名 `didengren.github.io`，Pages Source 为 GitHub Actions，根域名部署通过。
 - [ ] 关于页照片为儿童出镜的展项照片，公开前确认授权与隐私边界；如需替换，改 `src/assets/photo.jpg` 与 `about.astro` 的 alt / caption。
 - [ ] 生成 OG 分享图（1200×630），补 `og:image` / `twitter:image`。
 - [ ] 跑 `linkinator` 与 Lighthouse，确认 0 死链、四项 ≥ 90。
