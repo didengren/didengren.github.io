@@ -1965,6 +1965,14 @@
       text-align: right;
     }
 
+    .mobile-nav a[aria-current="page"] {
+      color: var(--color-red);
+    }
+
+    .mobile-nav a:focus-visible {
+      outline-offset: -2px;
+    }
+
     .hero {
       grid-template-columns: 1fr;
       gap: 26px;

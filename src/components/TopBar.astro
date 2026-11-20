@@ -51,7 +51,9 @@ const isActive = (href: string) =>
 
   <nav class="mobile-nav" id="mobile-nav" aria-label="移动导航">
     <div class="mobile-nav-inner">
-      {items.map((item) => <a href={item.href}>{item.label}</a>)}
+      {items.map((item) => (
+        <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a>
+      ))}
       <a href={withBase('/contact/#resume')} data-umami-event="resume_request">简历</a>
     </div>
   </nav>
