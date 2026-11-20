@@ -10,7 +10,7 @@ const supporting = projects.filter((project) => !project.data.featured);
 ---
 
 <BaseLayout
-  title="作品｜徐念祖 Sam Xu"
+  title="案例｜徐念祖 Sam Xu"
   description="五个真实项目：户用光伏统一入口平台、跨系统 AI 工作入口、代理商移动作业 App、分布式光伏 CRM、仓配物流系统。"
   ogDescription="从 0→1、跨系统入口整合到 AI 产品：每个案例只讲问题、取舍与结果。"
 >
@@ -19,8 +19,8 @@ const supporting = projects.filter((project) => !project.data.featured);
       <p class="kicker">WORK / {projects.length} CASES</p>
       <h1 class="page-title">案例</h1>
       <p class="page-lead">
-        每个案例按「问题—取舍—结果」写，不列功能清单。三个旗舰案例在前，两个支撑案例在后；
-        页面只讲逻辑，不放内部截图、客户名与明细数据。
+        三个旗舰案例，分别回答 0→1、跨系统整合与 AI 边界；两个存量改造，回答如何在不动大架构的前提下把机制修好。
+        每个案例只讲问题、取舍与结果。
       </p>
     </header>
 
@@ -37,8 +37,8 @@ const supporting = projects.filter((project) => !project.data.featured);
 
     <section>
       <div class="section-head">
-        <h2>支撑案例</h2>
-        <span class="en">SUPPORTING / {String(supporting.length).padStart(2, '0')}</span>
+        <h2>存量改造</h2>
+        <span class="en">RENOVATION / {String(supporting.length).padStart(2, '0')}</span>
       </div>
 
       {supporting.map((project, index) => (
@@ -46,7 +46,7 @@ const supporting = projects.filter((project) => !project.data.featured);
       ))}
 
       <p class="note section-more">
-        支撑案例只写机制与行为变化；没有可公开的量化口径，就不补数字。
+        案例只讲决策与机制；隐去客户名、内部截图与明细数据。没有可公开口径的数字不补。
       </p>
     </section>
   </div>

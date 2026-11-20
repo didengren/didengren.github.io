@@ -7,7 +7,7 @@ const home = withBase('/');
 
 const items = [
   { href: home, label: '首页' },
-  { href: withBase('/work/'), label: '作品' },
+  { href: withBase('/work/'), label: '案例' },
   { href: withBase('/experience/'), label: '经历' },
   { href: withBase('/about/'), label: '关于' },
   { href: withBase('/contact/'), label: '联系' },
@@ -55,6 +55,7 @@ const isActive = (href: string) =>
         <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a>
       ))}
       <a href={withBase('/contact/#resume')} data-umami-event="resume_request">简历</a>
+      <p class="mobile-status"><i></i>{profile.availability} · {profile.location}</p>
     </div>
   </nav>
 </header>

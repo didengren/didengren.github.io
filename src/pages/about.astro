@@ -3,37 +3,59 @@ import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Methods from '../components/Methods.astro';
 import ContactBlock from '../components/ContactBlock.astro';
-import photo from '../assets/photo.jpg';
+import systemMap from '../assets/system-map.jpg';
 import profile from '../data/profile.json';
 import skills from '../data/skills.json';
 import openSource from '../data/open-source.json';
+import { withBase } from '../utils/path';
 
 const moats = [
-  {
-    layer: '技术层',
-    title: '系统怎么建',
-    body: '60 人团队、92 个系统、63 个组件、32 个应用迁移；做过 MCP 与 RAG。能判断系统边界、研发成本与非功能要求。',
-  },
   {
     layer: '产品层',
     title: '事情怎么收',
     body: '45 个应用入口、4 类角色；户用光伏统一入口平台 0→1、跨系统 AI 工作入口、分布式光伏 CRM 与仓配物流改造。',
+    links: [
+      { href: '/work/pv-entry-platform/', label: 'CASE 01' },
+      { href: '/work/ai-work-entry/', label: 'CASE 02' },
+      { href: '/work/agent-app/', label: 'CASE 03' },
+    ],
+  },
+  {
+    layer: '技术层',
+    title: '系统怎么建',
+    body: '60 人团队、92 个系统、63 个组件、32 个应用迁移；做过 MCP 与 RAG。能判断系统边界、研发成本与非功能要求。',
+    links: [{ href: '/experience/', label: '完整经历' }],
   },
   {
     layer: '行业层',
     title: '业务怎么跑',
     body: '户用光伏全链路：获客、进件、勘探、安装、并网、巡检、售后、仓配、经销商。知道每个环节的系统与角色怎么接。',
+    links: [
+      { href: '/work/pv-entry-platform/', label: 'CASE 01' },
+      { href: '/work/solar-crm/', label: 'CASE 04' },
+      { href: '/work/warehouse-logistics/', label: 'CASE 05' },
+    ],
   },
+];
+
+const tools = [
+  'JavaScript / TypeScript',
+  'Vue / React',
+  'Node / NestJS',
+  'Python / FastAPI',
+  'MySQL / Redis',
+  'Docker',
+  '微前端 / monorepo',
 ];
 
 const qa = [
   {
     q: '为什么从技术转产品？',
-    a: '我做了 10 年前端管理，知道系统怎么建、团队怎么带，但不知道业务为什么这么定。2025 年我主动申请转产品：想接触业务、突破职业瓶颈——技术侧再往上走，更多是重复；我想知道需求从哪来、优先级怎么排、系统边界怎么划。',
+    a: '我做了 10 年技术工作，其中 7 年带前端团队，知道系统怎么建、团队怎么带，但不知道业务为什么这么定。2025 年我主动申请转产品：想接触业务、突破职业瓶颈——技术侧的成长更多在工程深度，我想往业务上游走，知道需求从哪来、优先级怎么排、系统边界怎么划。',
   },
   {
     q: '1.5 年产品，凭什么？',
-    a: '1.5 年不算长，但密度高：独立负责三类系统、5 个项目，其中既有 0→1，也有跨系统 AI 入口和全模块迭代。我不是「参与需求」，是定范围、做取舍、跟上线。技术背景让我省掉了「业务→研发」的来回翻译，所以同样时间能覆盖更大的范围。我没有 5 年产品的纵向深度，所以我投的是技术产品 / 平台产品方向，不是通才 PM。',
+    a: '1.5 年不算长，但密度高：独立负责三类系统、5 个产品项目（3 个旗舰 + 2 个存量改造），其中既有 0→1，也有跨系统 AI 入口和全模块迭代。我不是「参与需求」，是定范围、做取舍、跟上线。技术背景让我省掉了「业务→研发」的来回翻译，所以同样时间能覆盖更大的范围。我没有 5 年产品的纵向深度，所以我投的是技术产品 / 平台产品方向，不是通才 PM。',
   },
   {
     q: '技术背景有什么用？',
@@ -44,8 +66,8 @@ const qa = [
 
 <BaseLayout
   title="关于｜徐念祖 Sam Xu"
-  description="十年技术管理，一年半产品。我是在复杂多系统环境里做收敛的人：技术阶段收敛系统，产品阶段收敛入口与权限，AI 阶段收敛使用边界。"
-  ogDescription="十年技术管理，一年半产品：把业务问题翻译成系统方案，再判断研发成本和落地顺序。"
+  description="十年技术工作，七年带团队。我是在复杂多系统环境里做收敛的人：技术阶段收敛系统，产品阶段收敛入口与权限，AI 阶段收敛使用边界。"
+  ogDescription="十年技术工作，七年带团队：把业务问题翻译成系统方案，再判断研发成本和落地顺序。"
   type="profile"
   person
 >
@@ -54,49 +76,72 @@ const qa = [
       <p class="kicker">ABOUT / PRODUCT MANAGER</p>
       <h1 class="page-title">把系统收住，<em>把边界划清</em></h1>
       <p class="page-lead">
-        在复杂多系统环境里做收敛，并把 AI 放进可管理的边界。
+        在复杂多系统环境里做收敛，并把 AI 放进可管理的边界。不把自己包装成通才，先把系统整合、权限与状态、0→1 这类硬问题打透。
       </p>
     </header>
 
-    <section class="about-narrative">
-      <div class="split">
-        <div>
+    <div class="about-intro">
+      <figure class="about-map">
+        <div class="about-map-head">
+          <span>SYSTEM MAP / 多系统 → 一个入口</span>
+          <span class="about-map-tag">示意图</span>
+        </div>
+        <div class="about-map-scroll">
+          <Image
+            src={systemMap}
+            alt="多系统协同示意：销售、采购、计划、车间、仓储、质量、财务、运营与数据分析围绕数据中心连接"
+            widths={[640, 960, 1280]}
+            sizes="(max-width: 760px) 680px, (max-width: 1200px) 90vw, 763px"
+            format="webp"
+            loading="eager"
+          />
+        </div>
+        <p class="about-map-hint">横向滑动查看完整系统图 →</p>
+        <figcaption>系统协同示意：多系统、多角色，最终回到一个入口。非项目截图。</figcaption>
+      </figure>
+
+      <section class="about-narrative">
+        <div class="about-copy">
           <p class="body-copy">
             如果只能用一句话介绍自己：我是在复杂多系统环境里做收敛的人。技术阶段收敛系统与工程能力，
             产品阶段收敛入口、角色与状态，AI 阶段收敛模型与工具的使用边界。
           </p>
           <p class="body-copy">
-            我做了 10 年前端管理，知道系统怎么建、团队怎么带；但越往后越发现，真正决定一个系统好不好用的，
+            我做了 10 年技术工作，其中 7 年带前端团队，知道系统怎么建、团队怎么带；但越往后越发现，真正决定一个系统好不好用的，
             不是技术选型，而是业务为什么这么定。
           </p>
           <p class="body-copy">
-            2025 年我主动转做产品。1.5 年里，我独立负责客户经营、仓配物流与移动应用三类系统，做过 0→1、
+            2025 年我主动转做产品。转做产品后，我独立负责客户经营、仓配物流与移动应用三类系统，做过 0→1、
             跨系统入口整合，也把 AI 放进权限和审计的边界里。技术背景让我少了一层「业务→研发」的翻译损耗；
             产品训练让我开始对「做什么、不做什么」负责。
           </p>
           <p class="body-copy">
-            我还在补产品的方法：指标、用户研究、商业化。我不把自己包装成通才，先把系统整合、权限与状态、
-            0→1 这类硬问题打透。
+            我还在补产品的方法：用户研究、商业化、长期指标体系。这是我下一阶段的重点。
           </p>
         </div>
+      </section>
+    </div>
 
-        <figure class="photo-frame">
-          <Image
-            src={photo}
-            alt="科技展上的「孪生镜像」展项：屏幕前站着一名儿童，屏幕里是卡通化的数字形象"
-            widths={[360, 640]}
-            sizes="(max-width: 760px) 100vw, 360px"
-            format="webp"
-          />
-          <figcaption class="photo-cap">「孪生镜像」展项 · 2026</figcaption>
-        </figure>
+    <section>
+      <div class="section-head">
+        <h2>三个问题</h2>
+        <span class="en">TRANSITION / Q&amp;A</span>
+      </div>
+
+      <div class="qa">
+        {qa.map((item) => (
+          <div class="qa-item">
+            <h3>{item.q}</h3>
+            <p>{item.a}</p>
+          </div>
+        ))}
       </div>
     </section>
 
     <section>
       <div class="section-head">
-        <h2>三层护城河</h2>
-        <span class="en">TECHNICAL / PRODUCT / INDUSTRY</span>
+        <h2>三层能力</h2>
+        <span class="en">PRODUCT / TECHNICAL / INDUSTRY</span>
       </div>
 
       <div class="moat-grid">
@@ -105,6 +150,11 @@ const qa = [
             <p class="moat-layer">{moat.layer}</p>
             <h3>{moat.title}</h3>
             <p>{moat.body}</p>
+            <p class="moat-links">
+              {moat.links.map((link) => (
+                <a href={withBase(link.href)}>{link.label}</a>
+              ))}
+            </p>
           </div>
         ))}
       </div>
@@ -116,13 +166,13 @@ const qa = [
         <span class="en">HOW I WORK</span>
       </div>
 
-      <Methods />
+      <Methods detailed />
     </section>
 
     <section>
       <div class="section-head">
-        <h2>技能矩阵</h2>
-        <span class="en">SKILLS</span>
+        <h2>能力与工具</h2>
+        <span class="en">CAPABILITIES / TOOLS</span>
       </div>
 
       <div class="skill-grid">
@@ -135,6 +185,11 @@ const qa = [
           </div>
         ))}
       </div>
+
+      <details class="tools">
+        <summary>技术栈与工具（展开）</summary>
+        <p>{tools.join(' · ')}</p>
+      </details>
     </section>
 
     <section>
@@ -168,28 +223,15 @@ const qa = [
           <p class="body-copy">
             内容以工程实践为主：微前端、组件体系、MCP 与 AI 工作流。博客先外链，不在站内自建。
           </p>
+          <p class="body-copy">
+            这些项目让我亲手验证 AI 工具的能力边界，再反哺产品方案。
+          </p>
           <p>
             <a class="link" href={profile.blog} target="_blank" rel="noopener" data-umami-event="blog_click">
               {profile.blogLabel} ↗
             </a>
           </p>
         </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="section-head">
-        <h2>三个问题</h2>
-        <span class="en">TRANSITION / Q&amp;A</span>
-      </div>
-
-      <div class="qa">
-        {qa.map((item) => (
-          <div class="qa-item">
-            <h3>{item.q}</h3>
-            <p>{item.a}</p>
-          </div>
-        ))}
       </div>
     </section>
   </div>

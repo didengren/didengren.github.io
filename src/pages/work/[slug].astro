@@ -28,7 +28,7 @@ const index = all.findIndex((item) => item.id === project.id);
 const prev = all[(index - 1 + all.length) % all.length]!;
 const next = all[(index + 1) % all.length]!;
 
-const toc = headings.filter((heading) => heading.depth === 2);
+const toc = headings.filter((heading) => heading.depth === 2 || heading.depth === 3);
 ---
 
 <BaseLayout
@@ -42,7 +42,7 @@ const toc = headings.filter((heading) => heading.depth === 2);
     <nav class="crumb" aria-label="面包屑">
       <a href={withBase('/')}>首页</a>
       <span aria-hidden="true">/</span>
-      <a href={withBase('/work/')}>作品</a>
+      <a href={withBase('/work/')}>案例</a>
       <span aria-hidden="true">/</span>
       <span aria-current="page">{data.title}</span>
     </nav>
@@ -50,18 +50,32 @@ const toc = headings.filter((heading) => heading.depth === 2);
     <header class="case-head">
       <p class="kicker">CASE {String(index + 1).padStart(2, '0')} / {data.year}</p>
       <h1>{data.title}</h1>
+      <p class="case-subtitle">{data.subtitle}</p>
 
       <div class="case-meta">
         <span>角色 <b>{data.role}</b></span>
         <span>时间 <b>{data.period}</b></span>
-      </div>
-
-      <div class="tags">
-        {data.tags.map((tag) => <span class="tag">{tag}</span>)}
+        <span>用户 <b>{data.users}</b></span>
+        <span>范围 <b>{data.scope}</b></span>
       </div>
 
       <p class="case-summary">{data.summary}</p>
     </header>
+
+    <div class="case-brief">
+      <div>
+        <span>问题</span>
+        <p>{data.problem}</p>
+      </div>
+      <div>
+        <span>我的决策</span>
+        <p>{data.decision}</p>
+      </div>
+      <div>
+        <span>结果</span>
+        <p>{data.result}</p>
+      </div>
+    </div>
 
     <div class="case-layout">
       <article class="prose-case">
@@ -69,7 +83,7 @@ const toc = headings.filter((heading) => heading.depth === 2);
         <Content />
 
         <div class="case-foot">
-          <a class="btn" href={withBase('/contact/#resume')} data-umami-event="resume_request">索取简历 PDF</a>
+          <a class="btn" href={withBase('/contact/#resume')} data-umami-event="resume_request">邮件索取简历</a>
           <a class="link" href={`mailto:${profile.email}?subject=关于${data.title}`} data-umami-event="contact_click">
             就这个案例聊聊
           </a>
@@ -79,7 +93,7 @@ const toc = headings.filter((heading) => heading.depth === 2);
       <aside class="toc" data-toc aria-label="本页目录">
         <p class="toc-title">CONTENTS</p>
         {toc.map((heading) => (
-          <a href={`#${heading.slug}`}>{heading.text}</a>
+          <a class={heading.depth === 3 ? 'sub' : undefined} href={`#${heading.slug}`}>{heading.text}</a>
         ))}
       </aside>
     </div>

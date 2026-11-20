@@ -43,9 +43,9 @@ src/
   content/experience/*.md  # 4 段经历（含更早经历）
   data/profile.json        # 姓名 / 定位 / 联系方式 / 教育 / SEO
   data/impact.json         # 首页 4 个 KPI
-  data/skills.json         # 技能矩阵
+  data/skills.json         # 能力与工具（产品 / 技术 / AI / 行业）
   data/open-source.json    # 开源项目
-  data/resumes.json        # 简历版本与文件状态
+  data/resumes.json        # 简历版本、主投/备选与文件
   components/              # TopBar / Hero 组件 / SystemMap / CaseDiagram ...
   pages/                   # / /work /work/[slug] /experience /about /contact /404
   styles/global.css        # @theme token + 版式 + 响应式 + 打印
@@ -54,11 +54,11 @@ public/                    # favicon / robots.txt（简历 PDF 放 public/resume
 
 ## 内容维护
 
-- **加案例**：复制 `src/content/projects/` 下任一文件，补 frontmatter，正文按「背景—问题—角色—方案—取舍—结果—复盘—材料」写。`order` 控制顺序，`featured` 控制首页精选，`diagram` 选 `converge | flow | layers | funnel | loop`。
+- **加案例**：复制 `src/content/projects/` 下任一文件，补 frontmatter（含 `users`、`scope`、`decision`），正文按「背景—问题—角色—方案—取舍—结果—复盘」写。`order` 控制顺序，`featured` 控制首页精选，`diagram` 选 `converge | flow | layers | funnel | loop`。
 - **改经历**：`src/content/experience/*.md`，`order` 排序，`projects` 里填案例 slug 以生成「相关案例」。
 - **改首页数字**：`src/data/impact.json`；每个数字保留 `source` 字段，发布前对照事实底稿。
 - **改联系方式**：`src/data/profile.json`。
-- **简历 PDF**：导出后放到 `public/resume/`，把 `src/data/resumes.json` 里对应条目的 `file` 改为 `/resume/文件名.pdf`；页面会自动从「邮件索取」切换为「下载 PDF」。
+- **简历 PDF**：导出后放到 `public/resume/`，把 `src/data/resumes.json` 里对应条目的 `file` 改为 `/resume/文件名.pdf`；页面会自动从「邮件索取」切换为「下载 PDF」。PDF 未就绪时，产品经理版作为主投（`primary: true`），前端经理版作为备选，不显示「导出中」状态。
 
 > 页面切换由 `astro:transitions` 的 `ClientRouter` 接管：链接按 viewport 预取，主内容做 340ms 淡入，顶栏与页脚保持稳定。布局内交互统一挂在 `astro:page-load` 上，并在每次触发时重新查询 DOM、清理旧监听；新增组件脚本不要假设只执行一次。
 
@@ -90,7 +90,7 @@ public/                    # favicon / robots.txt（简历 PDF 放 public/resume
 
 - [ ] T-13 / T-14：导出 `徐念祖-产品经理.pdf` 与 `徐念祖-前端经理.pdf`，放入 `public/resume/`，切换下载 CTA。
 - [x] 仓库已改名 `didengren.github.io`，Pages Source 为 GitHub Actions，根域名部署通过。
-- [ ] 关于页照片为儿童出镜的展项照片，公开前确认授权与隐私边界；如需替换，改 `src/assets/photo.jpg` 与 `about.astro` 的 alt / caption。
+- [x] 关于页照片已替换为「系统协同示意」图（`src/assets/system-map.jpg`），灰度处理以匹配黑 / 白 / 红基调；原儿童出镜照片不再使用。
 - [ ] 生成 OG 分享图（1200×630），补 `og:image` / `twitter:image`。
 - [ ] 跑 `linkinator` 与 Lighthouse，确认 0 死链、四项 ≥ 90。
 - [ ] 全站搜索 `TPM`、`技术产品经理`、内部代号，结果必须为 0。

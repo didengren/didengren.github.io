@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ExperienceRow from '../components/ExperienceRow.astro';
 import ResumeCards from '../components/ResumeCards.astro';
@@ -10,45 +10,67 @@ const entries = (await getCollection('experience')).sort((a, b) => a.data.order 
 const main = entries.filter((entry) => !entry.data.early);
 const early = entries.filter((entry) => entry.data.early);
 
+const mainWithContent = await Promise.all(
+  main.map(async (entry) => ({
+    entry,
+    Content: (await render(entry)).Content,
+  })),
+);
+
+const earlyWithContent = await Promise.all(
+  early.map(async (entry) => ({
+    entry,
+    Content: (await render(entry)).Content,
+  })),
+);
+
 const projects = await getCollection('projects');
 const projectTitles = Object.fromEntries(projects.map((project) => [project.id, project.data.title]));
 ---
 
 <BaseLayout
   title="经历｜徐念祖 Sam Xu"
-  description="2011 年入行，10 年技术管理与前端团队管理，2025 年转做产品。完整经历、教育背景与简历下载。"
+  description="2011 年入行，10 年技术工作，其中 7 年带前端团队；2025 年转做产品。完整经历、教育背景与简历索取。"
   ogDescription="从 PHP 开发到前端经理，再到产品经理：一条以系统为线索的职业路径。"
 >
   <div class="wrap">
     <header class="page-head">
       <p class="kicker">EXPERIENCE / 2011—2026</p>
-      <h1 class="page-title">十年技术，<em>一年半产品</em></h1>
+      <h1 class="page-title">十年技术，<em>从系统到产品</em></h1>
       <p class="page-lead">
         2011 年入行做 PHP，2018 年起带前端团队，2025 年转做产品。技术让我能判断系统边界与研发成本，
         产品让我对「做什么、不做什么」负责。
       </p>
+      <div class="actions">
+        <a class="btn" href="#resume">索取简历</a>
+        <a class="link" href={`mailto:${profile.email}?subject=请发一份产品经理简历`}>直接邮件</a>
+      </div>
     </header>
 
     <section>
       <div class="section-head">
         <h2>工作经历</h2>
-        <span class="en">ROLES / 2025 → 2018</span>
+        <span class="en">ROLES / 2026 → 2011</span>
       </div>
 
       <div class="rows rows--full">
-        {main.map((entry) => (
-          <ExperienceRow entry={entry} variant="full" projectTitles={projectTitles} />
+        {mainWithContent.map(({ entry, Content }) => (
+          <ExperienceRow entry={entry} variant="full" projectTitles={projectTitles}>
+            <Content />
+          </ExperienceRow>
         ))}
       </div>
 
-      {early.map((entry) => (
+      {earlyWithContent.map(({ entry, Content }) => (
         <details class="early">
           <summary>
-            <span>更早经历</span>
+            <span>更早经历（节选）</span>
             <span class="early-k">{entry.data.period}</span>
           </summary>
           <div class="rows rows--full">
-            <ExperienceRow entry={entry} variant="full" projectTitles={projectTitles} />
+            <ExperienceRow entry={entry} variant="full" projectTitles={projectTitles}>
+              <Content />
+            </ExperienceRow>
           </div>
         </details>
       ))}
@@ -77,7 +99,7 @@ const projectTitles = Object.fromEntries(projects.map((project) => [project.id, 
     <section id="resume" class="section-pad">
       <div class="section-head">
         <h2>简历</h2>
-        <span class="en">RESUME / 2 VERSIONS</span>
+        <span class="en">RESUME / PRIMARY + OPTIONAL</span>
       </div>
 
       <ResumeCards />

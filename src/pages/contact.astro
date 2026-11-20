@@ -14,7 +14,7 @@ import profile from '../data/profile.json';
       <p class="kicker">CONTACT / OPEN TO PRODUCT ROLES</p>
       <h1 class="page-title">聊聊？</h1>
       <p class="page-lead">
-        我在看产品经理机会：技术产品 / 平台产品 / B 端产品。地点在常州和周边城市，行业不限。
+        我在看产品经理机会：技术产品 / 平台产品 / B 端产品。地点在常州和周边城市；行业不限，优先新能源 / 产业互联网 / 复杂 B 端系统。
       </p>
     </header>
 
@@ -26,6 +26,7 @@ import profile from '../data/profile.json';
         </a>
         <button class="copy-btn dark" type="button" data-copy-email={profile.email}>复制</button>
         <p class="note contact-note">手机号不公开；需要时可在邮件里交换。</p>
+        <p class="note contact-note">邮件里可以写：目标岗位 / 团队、地点与到岗时间、下一步安排。</p>
       </div>
 
       <div class="contact-list">
@@ -50,22 +51,15 @@ import profile from '../data/profile.json';
     <section id="resume" class="section-pad">
       <div class="section-head">
         <h2>简历</h2>
-        <span class="en">RESUME / 2 VERSIONS</span>
+        <span class="en">RESUME / PRIMARY + OPTIONAL</span>
       </div>
 
       <ResumeCards />
     </section>
 
-    <section class="section-pad">
-      <div class="section-head">
-        <h2>隐私</h2>
-        <span class="en">PRIVACY</span>
-      </div>
-
-      <p class="note">
-        本站不放 cookies。若启用 Umami 分析，只记录匿名的页面访问与 CTA 事件，不采集个人身份信息；
-        不放手机号、客户名、内部截图与明细数据。
-      </p>
-    </section>
+    <p class="note contact-privacy">
+      本站不放 cookies。若启用 Umami 分析，只记录匿名的页面访问与 CTA 事件，不采集个人身份信息；
+      不放手机号、客户名、内部截图与明细数据。
+    </p>
   </div>
 </BaseLayout>

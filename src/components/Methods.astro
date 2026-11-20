@@ -1,4 +1,12 @@
 ---
+import { withBase } from '../utils/path';
+
+interface Props {
+  detailed?: boolean;
+}
+
+const { detailed = false } = Astro.props;
+
 const methods = [
   {
     key: '收',
@@ -29,6 +37,8 @@ const methods = [
     </svg>
     <h3>{methods[0]!.key} · {methods[0]!.title}</h3>
     <p>{methods[0]!.body}</p>
+    {detailed && <p class="method-detail">例：代理商 App 把 45 个入口按「角色—任务—阶段」收成一个工作台。</p>}
+    <a class="method-link" href={withBase('/work/agent-app/')}>CASE 03 →</a>
   </div>
 
   <div class="method">
@@ -41,6 +51,8 @@ const methods = [
     </svg>
     <h3>{methods[1]!.key} · {methods[1]!.title}</h3>
     <p>{methods[1]!.body}</p>
+    {detailed && <p class="method-detail">例：户用光伏平台选择不重构存量系统，用 3 个月换上线窗口。</p>}
+    <a class="method-link" href={withBase('/work/pv-entry-platform/')}>CASE 01 →</a>
   </div>
 
   <div class="method">
@@ -58,5 +70,7 @@ const methods = [
     </svg>
     <h3>{methods[2]!.key} · {methods[2]!.title}</h3>
     <p>{methods[2]!.body}</p>
+    {detailed && <p class="method-detail">例：AI 工作入口用白名单、预览、确认、审计、降级五层边界。</p>}
+    <a class="method-link" href={withBase('/work/ai-work-entry/')}>CASE 02 →</a>
   </div>
 </div>

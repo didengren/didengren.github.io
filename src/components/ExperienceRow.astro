@@ -43,5 +43,11 @@ const { data } = entry;
         ))}
       </p>
     )}
+
+    {variant === 'full' && (
+      <div class="exp-note">
+        <slot />
+      </div>
+    )}
   </div>
 </div>

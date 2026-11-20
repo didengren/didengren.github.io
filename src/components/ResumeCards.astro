@@ -6,8 +6,8 @@ import { withBase } from '../utils/path';
 
 <div class="resume-grid">
   {resumes.map((resume) => (
-    <div class="card resume-card">
-      <div class="card-k">{resume.file ? 'PDF' : 'PDF / 导出中'}</div>
+    <div class={`card resume-card${resume.primary ? ' resume-card--primary' : ' resume-card--secondary'}`}>
+      <div class="card-k">{resume.file ? 'PDF' : resume.primary ? 'PRIMARY / 主投' : 'OPTIONAL / 备选'}</div>
       <h3>{resume.label}</h3>
       <p>{resume.description}</p>
       <p class="resume-for">适合：{resume.recommendedFor}</p>
@@ -26,7 +26,7 @@ import { withBase } from '../utils/path';
           href={`mailto:${profile.email}?subject=请发一份${resume.label}简历`}
           data-umami-event="resume_request"
         >
-          邮件索取
+          {resume.primary ? '邮件索取' : '邮件索取（备选）'}
         </a>
       )}
     </div>
@@ -34,5 +34,5 @@ import { withBase } from '../utils/path';
 </div>
 
 <p class="note resume-note">
-  PDF 尚在导出：产品经理版以技术产品方向内容为底稿，抬头统一写「产品经理」；前端经理版为次选。
+  PDF 通过邮件发送：产品经理版为主投，前端经理版仅在前端管理方向沟通时提供。
 </p>

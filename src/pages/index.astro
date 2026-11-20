@@ -16,7 +16,7 @@ const featured = projects.filter((project) => project.data.featured);
 const experience = (await getCollection('experience'))
   .filter((entry) => !entry.data.early)
   .sort((a, b) => a.data.order - b.data.order)
-  .slice(0, 3);
+  .slice(0, 2);
 ---
 
 <BaseLayout person>
@@ -26,18 +26,19 @@ const experience = (await getCollection('experience'))
         <p class="kicker rise">产品经理 · {profile.direction}</p>
         <h1 class="rise d1">把分散的系统<br /><em>收成一个入口</em></h1>
         <p class="lead rise d2">
-          10 年技术管理，1.5 年产品。做过 <b>0→1</b>、跨系统整合与 AI 助手；擅长把入口、角色权限与状态规则，收成一个可用的产品。
+          擅长把分散的系统收成一个入口，把角色与状态收成一套规则，把 AI 收进可管理的边界。10 年技术工作，带过<b>峰值 60 人</b>的三地团队；这几件事，都做成了能上线的东西。
         </p>
         <div class="actions rise d3">
-          <a class="btn" href="#work">查看案例 / 3</a>
+          <a class="btn" href="#work">查看 3 个旗舰案例</a>
           <a
             class="link"
-            href={`mailto:${profile.email}?subject=请发一份简历`}
+            href={`mailto:${profile.email}?subject=请发一份产品经理简历`}
             data-umami-event="resume_request"
           >
-            索取简历 PDF
+            邮件索取简历
           </a>
         </div>
+        <p class="hero-note">{profile.availability} · {profile.location}</p>
       </div>
 
       <div class="rise d2">
@@ -67,7 +68,7 @@ const experience = (await getCollection('experience'))
     <section id="experience">
       <div class="section-head">
         <h2>经历</h2>
-        <span class="en">EXPERIENCE / 2011—2026</span>
+        <span class="en">FROM TECH TO PRODUCT</span>
       </div>
 
       <div class="rows">
