@@ -60,6 +60,8 @@ public/                    # favicon / robots.txt（简历 PDF 放 public/resume
 - **改联系方式**：`src/data/profile.json`。
 - **简历 PDF**：导出后放到 `public/resume/`，把 `src/data/resumes.json` 里对应条目的 `file` 改为 `/resume/文件名.pdf`；页面会自动从「邮件索取」切换为「下载 PDF」。
 
+> 页面切换由 `astro:transitions` 的 `ClientRouter` 接管：主内容做 340ms 淡入，顶栏与页脚保持稳定。布局内交互统一挂在 `astro:page-load` 上，并在每次触发时重新查询 DOM、清理旧监听；新增组件脚本不要假设只执行一次。
+
 内容硬约束：
 
 - 对外只称「产品经理」；不出现 TPM / Technical Product Manager / 技术产品经理。

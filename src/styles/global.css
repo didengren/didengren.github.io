@@ -1789,6 +1789,31 @@
     }
   }
 
+  /* ---------- Page transition ----------
+     Keep the top bar and footer stable; animate the main content only. */
+  ::view-transition-old(root),
+  ::view-transition-new(root),
+  ::view-transition-group(root) {
+    animation: none !important;
+  }
+
+  main.page-enter {
+    animation: page-enter 0.34s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  @keyframes page-enter {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    main.page-enter {
+      animation: none;
+    }
+  }
+
   /* ---------- Responsive ---------- */
   @media (max-width: 1040px) {
     .wrap {

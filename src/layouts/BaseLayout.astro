@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
 import SEO from '../components/SEO.astro';
 import TopBar from '../components/TopBar.astro';
 import Footer from '../components/Footer.astro';
@@ -27,6 +28,7 @@ const umamiId = env.PUBLIC_UMAMI_WEBSITE_ID;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <SEO {...props} />
+    <ClientRouter />
     <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
     <meta name="theme-color" content="#0A0A0A" />
     <meta name="author" content="徐念祖" />
@@ -44,51 +46,126 @@ const umamiId = env.PUBLIC_UMAMI_WEBSITE_ID;
     <Footer />
 
     <script>
-      const menuBtn = document.querySelector<HTMLButtonElement>('[data-menu-btn]');
-      const mobileNav = document.getElementById('mobile-nav');
+      let pageController: AbortController | undefined;
+      let tocObserver: IntersectionObserver | undefined;
 
-      if (menuBtn && mobileNav) {
-        const setOpen = (open: boolean) => {
-          mobileNav.classList.toggle('open', open);
-          menuBtn.setAttribute('aria-expanded', String(open));
-        };
+      const initPage = () => {
+        pageController?.abort();
+        pageController = new AbortController();
+        const { signal } = pageController;
 
-        menuBtn.addEventListener('click', () => {
-          setOpen(!mobileNav.classList.contains('open'));
+        const menuBtn = document.querySelector<HTMLButtonElement>('[data-menu-btn]');
+        const mobileNav = document.getElementById('mobile-nav');
+
+        if (menuBtn && mobileNav) {
+          const setOpen = (open: boolean) => {
+            mobileNav.classList.toggle('open', open);
+            menuBtn.setAttribute('aria-expanded', String(open));
+          };
+
+          menuBtn.addEventListener(
+            'click',
+            () => {
+              setOpen(!mobileNav.classList.contains('open'));
+            },
+            { signal },
+          );
+
+          mobileNav.addEventListener(
+            'click',
+            (event) => {
+              if ((event.target as HTMLElement).closest('a')) setOpen(false);
+            },
+            { signal },
+          );
+
+          document.addEventListener(
+            'keydown',
+            (event) => {
+              if (event.key === 'Escape') setOpen(false);
+            },
+            { signal },
+          );
+
+          document.addEventListener(
+            'click',
+            (event) => {
+              const target = event.target as Node;
+              if (!mobileNav.contains(target) && !menuBtn.contains(target)) setOpen(false);
+            },
+            { signal },
+          );
+
+          window.matchMedia('(max-width: 760px)').addEventListener(
+            'change',
+            (event) => {
+              if (!event.matches) setOpen(false);
+            },
+            { signal },
+          );
+        }
+
+        document.querySelectorAll<HTMLButtonElement>('[data-copy-email]').forEach((button) => {
+          button.addEventListener(
+            'click',
+            async () => {
+              const email = button.dataset.copyEmail ?? '';
+              const original = button.textContent ?? '复制';
+              try {
+                await navigator.clipboard.writeText(email);
+                button.textContent = '已复制';
+                window.setTimeout(() => {
+                  button.textContent = original;
+                }, 1600);
+              } catch {
+                window.location.href = `mailto:${email}`;
+              }
+            },
+            { signal },
+          );
         });
 
-        mobileNav.addEventListener('click', (event) => {
-          if ((event.target as HTMLElement).closest('a')) setOpen(false);
-        });
+        tocObserver?.disconnect();
+        tocObserver = undefined;
 
-        document.addEventListener('keydown', (event) => {
-          if (event.key === 'Escape') setOpen(false);
-        });
+        const toc = document.querySelector<HTMLElement>('[data-toc]');
+        if (toc && 'IntersectionObserver' in window) {
+          const tocLinks = Array.from(toc.querySelectorAll<HTMLAnchorElement>('a'));
+          const sections = tocLinks
+            .map((link) => {
+              const id = link.getAttribute('href')?.replace('#', '');
+              return id ? document.getElementById(id) : null;
+            })
+            .filter((section): section is HTMLElement => section !== null);
 
-        document.addEventListener('click', (event) => {
-          const target = event.target as Node;
-          if (!mobileNav.contains(target) && !menuBtn.contains(target)) setOpen(false);
-        });
+          if (sections.length > 0) {
+            tocObserver = new IntersectionObserver(
+              (entries) => {
+                for (const entry of entries) {
+                  if (!entry.isIntersecting) continue;
+                  const id = entry.target.id;
+                  tocLinks.forEach((link) => {
+                    link.classList.toggle('is-active', link.getAttribute('href') === `#${id}`);
+                  });
+                }
+              },
+              { rootMargin: '0px 0px -68% 0px', threshold: 0 },
+            );
 
-        window.matchMedia('(max-width: 760px)').addEventListener('change', (event) => {
-          if (!event.matches) setOpen(false);
-        });
-      }
-
-      document.querySelectorAll<HTMLButtonElement>('[data-copy-email]').forEach((button) => {
-        button.addEventListener('click', async () => {
-          const email = button.dataset.copyEmail ?? '';
-          const original = button.textContent ?? '复制';
-          try {
-            await navigator.clipboard.writeText(email);
-            button.textContent = '已复制';
-            window.setTimeout(() => {
-              button.textContent = original;
-            }, 1600);
-          } catch {
-            window.location.href = `mailto:${email}`;
+            sections.forEach((section) => tocObserver?.observe(section));
           }
-        });
+        }
+      };
+
+      document.addEventListener('astro:page-load', initPage);
+      initPage();
+
+      document.addEventListener('astro:after-swap', () => {
+        const main = document.getElementById('main');
+        if (!main) return;
+        main.classList.remove('page-enter');
+        void main.offsetWidth;
+        main.classList.add('page-enter');
       });
     </script>
   </body>
