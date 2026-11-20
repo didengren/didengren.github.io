@@ -7,6 +7,10 @@ export default defineConfig({
   base: '/',
   output: 'static',
   trailingSlash: 'ignore',
+  prefetch: {
+    prefetchAll: true,
+    defaultStrategy: 'viewport',
+  },
   integrations: [sitemap()],
   vite: {
     plugins: [tailwindcss()],
