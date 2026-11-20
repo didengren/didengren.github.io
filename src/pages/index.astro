@@ -8,6 +8,7 @@ import ExperienceRow from '../components/ExperienceRow.astro';
 import Methods from '../components/Methods.astro';
 import ContactBlock from '../components/ContactBlock.astro';
 import profile from '../data/profile.json';
+import { withBase } from '../utils/path';
 
 const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
 const featured = projects.filter((project) => project.data.featured);
@@ -59,7 +60,7 @@ const experience = (await getCollection('experience'))
       ))}
 
       <p class="note section-more">
-        <a href="/work/">全部案例 / {projects.length} →</a>
+        <a href={withBase('/work/')}>全部案例 / {projects.length} →</a>
       </p>
     </section>
 
@@ -74,7 +75,7 @@ const experience = (await getCollection('experience'))
       </div>
 
       <p class="note section-more">
-        <a href="/experience/">完整经历与教育背景 →</a>
+        <a href={withBase('/experience/')}>完整经历与教育背景 →</a>
       </p>
     </section>
 

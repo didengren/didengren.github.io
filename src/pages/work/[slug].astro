@@ -5,6 +5,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import CaseDiagram from '../../components/CaseDiagram.astro';
 import ContactBlock from '../../components/ContactBlock.astro';
 import profile from '../../data/profile.json';
+import { withBase } from '../../utils/path';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
@@ -39,9 +40,9 @@ const toc = headings.filter((heading) => heading.depth === 2);
 >
   <div class="wrap">
     <nav class="crumb" aria-label="面包屑">
-      <a href="/">首页</a>
+      <a href={withBase('/')}>首页</a>
       <span aria-hidden="true">/</span>
-      <a href="/work/">作品</a>
+      <a href={withBase('/work/')}>作品</a>
       <span aria-hidden="true">/</span>
       <span aria-current="page">{data.title}</span>
     </nav>
@@ -68,7 +69,7 @@ const toc = headings.filter((heading) => heading.depth === 2);
         <Content />
 
         <div class="case-foot">
-          <a class="btn" href="/contact/#resume" data-umami-event="resume_request">索取简历 PDF</a>
+          <a class="btn" href={withBase('/contact/#resume')} data-umami-event="resume_request">索取简历 PDF</a>
           <a class="link" href={`mailto:${profile.email}?subject=关于${data.title}`} data-umami-event="contact_click">
             就这个案例聊聊
           </a>
@@ -84,11 +85,11 @@ const toc = headings.filter((heading) => heading.depth === 2);
     </div>
 
     <nav class="pager" aria-label="案例翻页">
-      <a href={`/work/${prev.id}/`}>
+      <a href={withBase(`/work/${prev.id}/`)}>
         <span class="pager-k">← PREVIOUS</span>
         <span class="pager-t">{prev.data.title}</span>
       </a>
-      <a href={`/work/${next.id}/`}>
+      <a href={withBase(`/work/${next.id}/`)}>
         <span class="pager-k">NEXT →</span>
         <span class="pager-t">{next.data.title}</span>
       </a>

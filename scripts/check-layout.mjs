@@ -1,6 +1,6 @@
 import { chromium } from 'playwright';
 
-const base = 'http://127.0.0.1:4321';
+const base = process.env.BASE_URL ?? 'http://127.0.0.1:4321/sam-xu-site';
 const pages = ['/', '/work/', '/work/pv-entry-platform/', '/work/ai-work-entry/', '/work/agent-app/', '/work/solar-crm/', '/work/warehouse-logistics/', '/experience/', '/about/', '/contact/', '/404.html'];
 
 const browser = await chromium.launch();

@@ -1,6 +1,7 @@
 ---
 import profile from '../data/profile.json';
 import resumes from '../data/resumes.json';
+import { withBase } from '../utils/path';
 ---
 
 <div class="resume-grid">
@@ -13,7 +14,7 @@ import resumes from '../data/resumes.json';
       {resume.file ? (
         <a
           class="btn resume-btn"
-          href={resume.file}
+          href={withBase(resume.file)}
           download
           data-umami-event="resume_download"
         >

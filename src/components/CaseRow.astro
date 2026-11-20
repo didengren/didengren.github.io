@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import MiniMap from './MiniMap.astro';
+import { withBase } from '../utils/path';
 
 interface Props {
   project: CollectionEntry<'projects'>;
@@ -19,7 +20,7 @@ const captions: Record<string, string> = {
 };
 ---
 
-<a class="case-row" href={`/work/${project.id}/`} data-umami-event={`case_${project.id}`}>
+<a class="case-row" href={withBase(`/work/${project.id}/`)} data-umami-event={`case_${project.id}`}>
   <div class="case-idx">
     CASE {String(index).padStart(2, '0')}
     <span>{data.year}</span>

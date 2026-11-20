@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { withBase } from '../utils/path';
 
 interface Props {
   entry: CollectionEntry<'experience'>;
@@ -38,7 +39,7 @@ const { data } = entry;
       <p class="exp-links">
         <span class="exp-links-k">相关案例</span>
         {data.projects.map((slug) => (
-          <a href={`/work/${slug}/`}>{projectTitles[slug] ?? slug}</a>
+          <a href={withBase(`/work/${slug}/`)}>{projectTitles[slug] ?? slug}</a>
         ))}
       </p>
     )}

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { withBase } from '../utils/path';
 ---
 
 <BaseLayout
@@ -13,8 +14,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <h1>这个页面<br /><em>不在图纸上。</em></h1>
       <p class="page-lead">链接可能已经过期，或者地址输错了。</p>
       <div class="actions">
-        <a class="btn" href="/">回首页</a>
-        <a class="link" href="/work/">看案例</a>
+        <a class="btn" href={withBase('/')}>回首页</a>
+        <a class="link" href={withBase('/work/')}>看案例</a>
       </div>
     </section>
   </div>

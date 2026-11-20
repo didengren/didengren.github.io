@@ -2,9 +2,12 @@
 import profile from '../data/profile.json';
 
 const year = new Date().getFullYear();
+const site = Astro.site ?? new URL('https://didengren.github.io');
+const siteRoot = new URL(import.meta.env.BASE_URL, site);
+const display = siteRoot.href.replace(/^https?:\/\//, '').replace(/\/$/, '');
 ---
 
 <footer class="footer wrap">
   <span>© {year} {profile.name} · {profile.title}</span>
-  <span>LAST UPDATED {profile.lastUpdated} · twonian.github.io</span>
+  <span>LAST UPDATED {profile.lastUpdated} · {display}</span>
 </footer>

@@ -1,7 +1,7 @@
 import { chromium } from 'playwright';
 import { mkdir } from 'node:fs/promises';
 
-const base = process.env.BASE_URL ?? 'http://127.0.0.1:4321';
+const base = process.env.BASE_URL ?? 'http://127.0.0.1:4321/sam-xu-site';
 const outDir = 'shots';
 
 const targets = [

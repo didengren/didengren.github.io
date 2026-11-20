@@ -3,8 +3,8 @@ import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://twonian.github.io',
-  base: '/',
+  site: 'https://didengren.github.io',
+  base: '/sam-xu-site/',
   output: 'static',
   trailingSlash: 'ignore',
   integrations: [sitemap()],

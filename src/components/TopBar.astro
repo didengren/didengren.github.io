@@ -1,22 +1,25 @@
 ---
 import profile from '../data/profile.json';
+import { withBase } from '../utils/path';
 
 const path = Astro.url.pathname;
+const home = withBase('/');
+
 const items = [
-  { href: '/', label: '首页' },
-  { href: '/work/', label: '作品' },
-  { href: '/experience/', label: '经历' },
-  { href: '/about/', label: '关于' },
-  { href: '/contact/', label: '联系' },
+  { href: home, label: '首页' },
+  { href: withBase('/work/'), label: '作品' },
+  { href: withBase('/experience/'), label: '经历' },
+  { href: withBase('/about/'), label: '关于' },
+  { href: withBase('/contact/'), label: '联系' },
 ];
 
 const isActive = (href: string) =>
-  href === '/' ? path === '/' : path.startsWith(href.replace(/\/$/, ''));
+  href === home ? path === home : path.startsWith(href.replace(/\/$/, ''));
 ---
 
 <header class="top">
   <div class="wrap top-bar">
-    <a class="brand" href="/">徐念祖<span>SAM XU</span></a>
+    <a class="brand" href={home}>徐念祖<span>SAM XU</span></a>
 
     <nav class="nav" aria-label="主导航">
       {items.map((item) => (
@@ -27,7 +30,7 @@ const isActive = (href: string) =>
     </nav>
 
     <div class="top-right">
-      <a class="top-cta" href="/contact/#resume" data-umami-event="resume_request">简历</a>
+      <a class="top-cta" href={withBase('/contact/#resume')} data-umami-event="resume_request">简历</a>
       <div class="status"><i></i>{profile.availability}</div>
       <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-nav" data-menu-btn>
         菜单
@@ -37,6 +40,6 @@ const isActive = (href: string) =>
 
   <nav class="mobile-nav" id="mobile-nav" aria-label="移动导航">
     {items.map((item) => <a href={item.href}>{item.label}</a>)}
-    <a href="/contact/#resume" data-umami-event="resume_request">简历</a>
+    <a href={withBase('/contact/#resume')} data-umami-event="resume_request">简历</a>
   </nav>
 </header>
