@@ -51,7 +51,6 @@ const umamiId = env.PUBLIC_UMAMI_WEBSITE_ID;
         const setOpen = (open: boolean) => {
           mobileNav.classList.toggle('open', open);
           menuBtn.setAttribute('aria-expanded', String(open));
-          menuBtn.textContent = open ? '关闭' : '菜单';
         };
 
         menuBtn.addEventListener('click', () => {
@@ -69,6 +68,10 @@ const umamiId = env.PUBLIC_UMAMI_WEBSITE_ID;
         document.addEventListener('click', (event) => {
           const target = event.target as Node;
           if (!mobileNav.contains(target) && !menuBtn.contains(target)) setOpen(false);
+        });
+
+        window.matchMedia('(max-width: 760px)').addEventListener('change', (event) => {
+          if (!event.matches) setOpen(false);
         });
       }
 

@@ -2,8 +2,8 @@
 
 面向产品经理岗位的静态作品集：Astro 5 + Tailwind CSS 4 + TypeScript strict，内容用 Markdown / JSON 管理，零后端。
 
-- 线上地址：`https://didengren.github.io/sam-xu-site/`（GitHub Pages 项目站）
-- 仓库：`https://github.com/didengren/sam-xu-site`
+- 线上地址：`https://didengren.github.io/`（GitHub Pages 用户站）
+- 仓库：`https://github.com/didengren/didengren.github.io`
 - 设计系统：[`DESIGN.md`](./DESIGN.md)
 - 需求与文案：vault 内 `个人材料/简历/静态个人网站/`
 
@@ -12,10 +12,10 @@
 ```bash
 export PATH="$HOME/.nvm/versions/node/v24.14.0/bin:$PATH"
 pnpm install
-pnpm dev          # http://localhost:4321/sam-xu-site/
+pnpm dev          # http://localhost:4321/
 ```
 
-> 站点配置为项目站：`site: 'https://didengren.github.io'`、`base: '/sam-xu-site/'`。站内链接统一走 `src/utils/path.ts` 的 `withBase()`；以后若迁到根域名（`didengren.github.io` 或自定义域名），只改 `astro.config.mjs` 的 `base` 和 `public/robots.txt` 即可。
+> 站点配置为用户站：`site: 'https://didengren.github.io'`、`base: '/'`。站内链接统一走 `src/utils/path.ts` 的 `withBase()`；以后若迁到自定义域名，只改 `astro.config.mjs` 的 `site` / `base` 和 `public/robots.txt` 即可。
 
 Node **24.14.0**，pnpm **10.30.3**；版本见 `.nvmrc` 与 `package.json`。首次安装如提示 `Ignored build scripts`，执行 `pnpm approve-builds` 并允许 `sharp`、`esbuild`（本仓库已在 `pnpm.onlyBuiltDependencies` 中声明）。
 
@@ -32,7 +32,7 @@ Node **24.14.0**，pnpm **10.30.3**；版本见 `.nvmrc` 与 `package.json`。�
 | `pnpm lint:links` | 死链检查（需先 `pnpm add -D linkinator`） |
 | `pnpm lighthouse` | Lighthouse CI（需先 `pnpm add -D @lhci/cli`） |
 
-> `check:layout` 与 `shots` 需要先在另一个终端启动 `pnpm preview`（默认 `http://127.0.0.1:4321/sam-xu-site/`）；可用 `BASE_URL` 环境变量指向其他地址。
+> `check:layout` 与 `shots` 需要先在另一个终端启动 `pnpm preview`（默认 `http://127.0.0.1:4321/`）；可用 `BASE_URL` 环境变量指向其他地址。
 
 ## 目录
 
@@ -70,24 +70,24 @@ public/                    # favicon / robots.txt（简历 PDF 放 public/resume
 
 ## 部署（GitHub Pages）
 
-仓库：`https://github.com/didengren/sam-xu-site`（项目站）。不要把 vault 根目录推到 Pages。
+仓库：`https://github.com/didengren/didengren.github.io`（用户站，仓库名必须是 `didengren.github.io`）。不要把 vault 根目录推到 Pages。
 
-1. 仓库 Settings → Pages → Source 选 **GitHub Actions**（当前仓库还未启用 Pages，需手动打开一次）。
+1. 仓库 Settings → Pages → Source 选 **GitHub Actions**。
 2. push 到 `main` 触发 `.github/workflows/deploy.yml`：`pnpm check` → `pnpm build` → 部署 `dist/`。
-3. 线上地址：`https://didengren.github.io/sam-xu-site/`。
+3. 线上地址：`https://didengren.github.io/`。
 4. 若启用 Umami，在仓库 Settings → Secrets and variables → Actions → Variables 里配置：
    - `PUBLIC_UMAMI_SRC`（例：`https://cloud.umami.is/script.js`）
    - `PUBLIC_UMAMI_WEBSITE_ID`
    两个都为空时不加载统计脚本。
 
-`astro.config.mjs` 已设 `site: 'https://didengren.github.io'`、`base: '/sam-xu-site/'`、`output: 'static'`，并生成 `sitemap-index.xml`。站内链接统一用 `withBase()`，不要在组件里手写根路径。
+`astro.config.mjs` 已设 `site: 'https://didengren.github.io'`、`base: '/'`、`output: 'static'`，并生成 `sitemap-index.xml`。站内链接统一用 `withBase()`，不要在组件里手写根路径。
 
-> 如果以后要改成根地址 `https://didengren.github.io/`：把仓库改名为 `didengren.github.io`，将 `base` 改为 `'/'`，同步改 `public/robots.txt` 的 sitemap 地址。其余内链会自动跟随。`twonian.github.io` 属于另一个用户名，当前仓库无法直接部署到该地址。
+> 从项目站迁到用户站时：仓库改名为 `didengren.github.io`，`base` 改为 `'/'`，同步 `public/robots.txt` 的 sitemap 地址；其余内链会自动跟随。若换自定义域名，则改 `site` 为域名、`base` 保持 `'/'`，并在 `public/` 放 `CNAME`。
 
 ## 上线前待办
 
 - [ ] T-13 / T-14：导出 `徐念祖-产品经理.pdf` 与 `徐念祖-前端经理.pdf`，放入 `public/resume/`，切换下载 CTA。
-- [ ] 在仓库 Settings → Pages 启用 GitHub Actions（当前 `has_pages: false`）。
+- [ ] 仓库改名为 `didengren.github.io` 后，在 Settings → Pages 重新确认 Source 为 GitHub Actions。
 - [ ] 关于页照片为儿童出镜的展项照片，公开前确认授权与隐私边界；如需替换，改 `src/assets/photo.jpg` 与 `about.astro` 的 alt / caption。
 - [ ] 生成 OG 分享图（1200×630），补 `og:image` / `twitter:image`。
 - [ ] 跑 `linkinator` 与 Lighthouse，确认 0 死链、四项 ≥ 90。

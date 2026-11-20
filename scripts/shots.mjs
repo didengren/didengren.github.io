@@ -1,7 +1,7 @@
 import { chromium } from 'playwright';
 import { mkdir } from 'node:fs/promises';
 
-const base = process.env.BASE_URL ?? 'http://127.0.0.1:4321/sam-xu-site';
+const base = process.env.BASE_URL ?? 'http://127.0.0.1:4321';
 const outDir = 'shots';
 
 const targets = [
@@ -40,7 +40,7 @@ for (const width of [1440, 375]) {
   if (width === 375) {
     await page.goto(base + '/', { waitUntil: 'networkidle' });
     await page.click('[data-menu-btn]');
-    await page.waitForTimeout(250);
+    await page.waitForTimeout(600);
     await page.screenshot({ path: `${outDir}/home-menu-375.png` });
   }
 

@@ -32,14 +32,27 @@ const isActive = (href: string) =>
     <div class="top-right">
       <a class="top-cta" href={withBase('/contact/#resume')} data-umami-event="resume_request">简历</a>
       <div class="status"><i></i>{profile.availability}</div>
-      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-nav" data-menu-btn>
-        菜单
+      <button
+        class="menu-btn"
+        type="button"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        aria-label="菜单"
+        data-menu-btn
+      >
+        <span class="menu-label" aria-hidden="true">
+          <span class="menu-label-open">菜单</span>
+          <span class="menu-label-close">关闭</span>
+        </span>
+        <span class="menu-sign" aria-hidden="true"></span>
       </button>
     </div>
   </div>
 
   <nav class="mobile-nav" id="mobile-nav" aria-label="移动导航">
-    {items.map((item) => <a href={item.href}>{item.label}</a>)}
-    <a href={withBase('/contact/#resume')} data-umami-event="resume_request">简历</a>
+    <div class="mobile-nav-inner">
+      {items.map((item) => <a href={item.href}>{item.label}</a>)}
+      <a href={withBase('/contact/#resume')} data-umami-event="resume_request">简历</a>
+    </div>
   </nav>
 </header>

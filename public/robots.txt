@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://didengren.github.io/sam-xu-site/sitemap-index.xml
+Sitemap: https://didengren.github.io/sitemap-index.xml

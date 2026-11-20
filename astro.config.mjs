@@ -4,7 +4,7 @@ import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   site: 'https://didengren.github.io',
-  base: '/sam-xu-site/',
+  base: '/',
   output: 'static',
   trailingSlash: 'ignore',
   integrations: [sitemap()],
